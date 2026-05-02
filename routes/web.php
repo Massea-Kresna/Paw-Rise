@@ -1,21 +1,65 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\HomeController;
+use App\Http\Controllers\Auth\LoginController;
+use App\Http\Controllers\Auth\RegisterController;
+use App\Http\Controllers\Auth\LogoutController;
+use App\Http\Controllers\CatalogController;
 use App\Http\Controllers\AnimalController;
-use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\AdoptionController;
+use App\Http\Controllers\FavoriteController;
+use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\Shelter\DashboardController as ShelterDashboard;
+use App\Http\Controllers\Shelter\AnimalController as ShelterAnimalController;
+use App\Http\Controllers\Shelter\ApplicationController as ShelterApplicationController;
 
-Route::get('/', function () {
-    return view('pages.home');
+// Public
+Route::get('/', [HomeController::class, 'index'])->name('home');
+Route::get('/edukasi', [HomeController::class, 'education'])->name('education');
+Route::get('/tentang-kami', [HomeController::class, 'about'])->name('about');
+Route::get('/bantuan', [HomeController::class, 'help'])->name('help');
+Route::post('/kontak', [HomeController::class, 'sendContact'])->name('contact.send');
+
+// Auth
+Route::middleware('guest')->group(function () {
+    Route::get('/masuk', [LoginController::class, 'show'])->name('login');
+    Route::post('/masuk', [LoginController::class, 'store'])->name('login.store');
+    Route::get('/daftar', [RegisterController::class, 'show'])->name('register');
+    Route::post('/daftar', [RegisterController::class, 'store'])->name('register.store');
 });
 
-Route::get('/animals', [AnimalController::class, 'index']);
-Route::get('/animals/{id}', [AnimalController::class, 'show']);
+Route::middleware('auth')->group(function () {
+    Route::get('/keluar', [LogoutController::class, 'show'])->name('logout.show');
+    Route::post('/keluar', [LogoutController::class, 'destroy'])->name('logout');
+});
 
-Route::post('/adopt/{id}', [AdoptionController::class, 'store']);
+// Catalog (public)
+Route::get('/katalog', [CatalogController::class, 'index'])->name('catalog.index');
+Route::get('/hewan/{animal}', [AnimalController::class, 'show'])->name('animals.show');
 
-Route::get('/dashboard/admin', [DashboardController::class, 'admin']);
-Route::get('/dashboard/shelter', [DashboardController::class, 'shelter']);
+// Adopter
+Route::middleware(['auth', 'role:adopter'])->group(function () {
+    Route::post('/favorit/{animal}', [FavoriteController::class, 'toggle'])->name('favorites.toggle');
+    Route::get('/adopsi/{animal}', [AdoptionController::class, 'create'])->name('adoption.create');
+    Route::post('/adopsi/{animal}', [AdoptionController::class, 'store'])->name('adoption.store');
 
-Route::get('/approve/{id}', [DashboardController::class, 'approve']);
-Route::get('/reject/{id}', [DashboardController::class, 'reject']);
+    Route::prefix('akun')->name('user.')->group(function () {
+        Route::get('/profil', [ProfileController::class, 'edit'])->name('profile');
+        Route::post('/profil', [ProfileController::class, 'update'])->name('profile.update');
+        Route::get('/permohonan-saya', [AdoptionController::class, 'index'])->name('applications');
+        Route::get('/favorit', [FavoriteController::class, 'index'])->name('favorites');
+    });
+});
+
+// Shelter
+Route::middleware(['auth', 'role:shelter'])->prefix('shelter')->name('shelter.')->group(function () {
+    Route::get('/dashboard', [ShelterDashboard::class, 'index'])->name('dashboard');
+
+    Route::resource('animals', ShelterAnimalController::class)->except(['show']);
+
+    Route::get('/permohonan', [ShelterApplicationController::class, 'index'])->name('applications.index');
+    Route::get('/permohonan/{application}', [ShelterApplicationController::class, 'show'])->name('applications.show');
+    Route::post('/permohonan/{application}/setujui', [ShelterApplicationController::class, 'approve'])->name('applications.approve');
+    Route::post('/permohonan/{application}/tolak', [ShelterApplicationController::class, 'reject'])->name('applications.reject');
+});

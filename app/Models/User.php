@@ -2,48 +2,68 @@
 
 namespace App\Models;
 
-// use Illuminate\Contracts\Auth\MustVerifyEmail;
-use Database\Factories\UserFactory;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
+use Illuminate\Database\Eloquent\Relations\HasOne;
+use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 
 class User extends Authenticatable
 {
-    /** @use HasFactory<UserFactory> */
     use HasFactory, Notifiable;
 
-    /**
-     * The attributes that are mass assignable.
-     *
-     * @var list<string>
-     */
     protected $fillable = [
-        'name',
-        'email',
-        'password',
+        'name', 'email', 'password', 'role', 'phone',
+        'profile_photo', 'address', 'bio',
     ];
 
-    /**
-     * The attributes that should be hidden for serialization.
-     *
-     * @var list<string>
-     */
-    protected $hidden = [
-        'password',
-        'remember_token',
-    ];
+    protected $hidden = ['password', 'remember_token'];
 
-    /**
-     * Get the attributes that should be cast.
-     *
-     * @return array<string, string>
-     */
     protected function casts(): array
     {
         return [
             'email_verified_at' => 'datetime',
             'password' => 'hashed',
         ];
+    }
+
+    public function isShelter(): bool
+    {
+        return $this->role === 'shelter';
+    }
+
+    public function isAdopter(): bool
+    {
+        return $this->role === 'adopter';
+    }
+
+    public function shelter(): HasOne
+    {
+        return $this->hasOne(Shelter::class);
+    }
+
+    public function applications(): HasMany
+    {
+        return $this->hasMany(AdoptionApplication::class);
+    }
+
+    public function favorites(): HasMany
+    {
+        return $this->hasMany(Favorite::class);
+    }
+
+    public function favoriteAnimals(): BelongsToMany
+    {
+        return $this->belongsToMany(Animal::class, 'favorites')->withTimestamps();
+    }
+
+    public function profilePhotoUrl(): string
+    {
+        if ($this->profile_photo) {
+            return asset('storage/' . $this->profile_photo);
+        }
+        $initials = strtoupper(substr($this->name, 0, 2));
+        return 'https://ui-avatars.com/api/?name=' . urlencode($initials) . '&background=F08C2A&color=fff&size=128';
     }
 }

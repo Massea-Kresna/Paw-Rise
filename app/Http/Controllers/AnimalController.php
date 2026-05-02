@@ -2,20 +2,21 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
 use App\Models\Animal;
 
 class AnimalController extends Controller
 {
-    public function index()
+    public function show(Animal $animal)
     {
-        $animals = Animal::all();
-        return view('pages.animals', compact('animals'));
-    }
+        $animal->load(['shelter', 'photos']);
 
-    public function show($id)
-    {
-        $animal = Animal::findOrFail($id);
-        return view('pages.detail', compact('animal'));
+        $similar = Animal::with('shelter')
+            ->where('id', '!=', $animal->id)
+            ->where('species', $animal->species)
+            ->where('status', 'tersedia')
+            ->take(4)
+            ->get();
+
+        return view('animals.show', compact('animal', 'similar'));
     }
 }
