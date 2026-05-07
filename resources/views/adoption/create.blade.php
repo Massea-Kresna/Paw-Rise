@@ -1,65 +1,313 @@
-@extends('layouts.user')
-@section('title', 'Ajukan Adopsi - PawRise')
-@section('content')
-<div class="container py-5">
-    <a href="{{ route('animals.show', $animal) }}" class="text-decoration-none text-secondary mb-3 d-inline-block"><i class="bi bi-arrow-left"></i> Kembali</a>
+@extends('layouts.app')
+ 
+@section('title', 'Formulir Adopsi - PawRise')
+ 
+@section('body')
+ 
+{{-- Top bar dengan tombol Batal --}}
+<div class="d-flex justify-content-end align-items-center px-4 py-3 bg-white border-bottom">
+    <a href="{{ route('animals.show', $animal) }}" class="d-inline-flex align-items-center gap-2 text-decoration-none fw-semibold"
+       style="color: var(--pr-text-muted); font-size: .9rem;">
+        <i class="bi bi-x"></i> BATAL
+    </a>
+</div>
+ 
+<div class="container-xl py-4" style="max-width: 1100px;">
     <div class="row g-4">
-        <div class="col-lg-8">
-            <div class="pr-card p-4 p-md-5">
-                <h2 class="fw-bold mb-1">Formulir Adopsi</h2>
-                <p class="text-secondary mb-4">Isi formulir berikut untuk mengajukan adopsi {{ $animal->name }}.</p>
-
-                @if($errors->any())
-                    <div class="alert alert-danger"><ul class="mb-0">@foreach($errors->all() as $e)<li>{{$e}}</li>@endforeach</ul></div>
-                @endif
-
-                <form method="POST" action="{{ route('adoption.store', $animal) }}" class="d-grid gap-3">
-                    @csrf
-                    <h6 class="fw-bold mt-2">Data Pribadi</h6>
-                    <div class="row g-3">
-                        <div class="col-md-6"><label class="form-label">Nama Lengkap</label><input type="text" name="full_name" value="{{ old('full_name', auth()->user()->name) }}" class="form-control" required></div>
-                        <div class="col-md-6"><label class="form-label">No. WhatsApp</label><input type="text" name="whatsapp" value="{{ old('whatsapp', auth()->user()->phone) }}" class="form-control" required></div>
-                        <div class="col-12"><label class="form-label">Email</label><input type="email" name="email" value="{{ old('email', auth()->user()->email) }}" class="form-control" required></div>
-                        <div class="col-12"><label class="form-label">Alamat Lengkap</label><textarea name="address" rows="2" class="form-control" required>{{ old('address', auth()->user()->address) }}</textarea></div>
-                    </div>
-
-                    <h6 class="fw-bold mt-3">Pengalaman & Motivasi</h6>
-                    <div>
-                        <label class="form-label">Pengalaman memelihara hewan</label>
-                        <select name="experience" class="form-select" required>
-                            <option value="">Pilih...</option>
-                            <option value="belum" {{ old('experience')=='belum'?'selected':'' }}>Belum pernah</option>
-                            <option value="pernah" {{ old('experience')=='pernah'?'selected':'' }}>Pernah</option>
-                            <option value="sedang" {{ old('experience')=='sedang'?'selected':'' }}>Sedang memelihara</option>
-                        </select>
-                    </div>
-                    <div>
-                        <label class="form-label">Mengapa Anda ingin mengadopsi {{ $animal->name }}?</label>
-                        <textarea name="reason" rows="4" class="form-control" required>{{ old('reason') }}</textarea>
-                    </div>
-
-                    <div class="form-check mt-2">
-                        <input class="form-check-input" type="checkbox" name="agreement" value="1" id="agreement" required>
-                        <label class="form-check-label" for="agreement">Saya menyetujui syarat & ketentuan PawRise serta berkomitmen merawat hewan dengan kasih sayang.</label>
-                    </div>
-                    <button type="submit" class="btn pr-btn-primary btn-lg">Kirim Permohonan</button>
-                </form>
-            </div>
-        </div>
+ 
+        {{-- ============ SIDEBAR KIRI ============ --}}
         <div class="col-lg-4">
-            <div class="pr-card overflow-hidden sticky-top" style="top: 90px;">
-                <img src="{{ $animal->mainPhotoUrl() }}" alt="" style="height: 220px; width: 100%; object-fit: cover;">
+ 
+            {{-- Pet card --}}
+            <div class="pr-card overflow-hidden mb-3" style="border: 2px solid var(--pr-orange);">
+                <div style="position: relative; aspect-ratio: 4/3; overflow: hidden; background: #eee;">
+                    <img src="{{ $animal->mainPhotoUrl() }}"
+                         alt="{{ $animal->name }}"
+                         style="width:100%; height:100%; object-fit:cover;">
+                    <span class="pr-tag"
+                          style="position:absolute; bottom:12px; left:12px; border-radius:999px;">
+                        <i class="bi bi-paw-fill me-1"></i> SIAP ADOPSI
+                    </span>
+                </div>
                 <div class="p-3">
                     <h5 class="fw-bold mb-1">{{ $animal->name }}</h5>
-                    <p class="text-secondary small mb-2"><i class="bi bi-geo-alt"></i> {{ $animal->shelter->shelter_name ?? '' }}</p>
-                    <ul class="list-unstyled small mb-0">
-                        <li><strong>Ras:</strong> {{ $animal->breed }}</li>
-                        <li><strong>Usia:</strong> {{ $animal->ageLabel() }}</li>
-                        <li><strong>Jenis Kelamin:</strong> {{ ucfirst($animal->gender) }}</li>
-                    </ul>
+                    <p class="mb-0" style="color: var(--pr-text-muted); font-size: .9rem;">
+                        <i class="bi bi-geo-alt"></i> {{ $animal->shelter->shelter_name ?? '' }}
+                    </p>
+                </div>
+            </div>
+ 
+            {{-- Tahapan aplikasi --}}
+            <div class="pr-card p-3">
+                <p class="fw-bold mb-3" style="font-size: .95rem;">Tahapan Aplikasi</p>
+ 
+                {{-- Step 1 --}}
+                <div class="pr-step active">
+                    <div class="pr-step-icon">
+                        <i class="bi bi-person-fill"></i>
+                    </div>
+                    <div>
+                        <div class="fw-semibold" style="font-size:.9rem;">1. Data Diri</div>
+                        <div class="small-muted">Informasi kontak dasar</div>
+                    </div>
+                </div>
+                {{-- Connector --}}
+                <div style="width:2px; height:18px; background:var(--pr-border); margin-left:13px;"></div>
+ 
+                {{-- Step 2 --}}
+                <div class="pr-step">
+                    <div class="pr-step-icon">
+                        <i class="bi bi-heart-fill"></i>
+                    </div>
+                    <div>
+                        <div class="fw-semibold" style="font-size:.9rem; color: var(--pr-text-muted);">2. Alasan Adopsi</div>
+                        <div class="small-muted">Motivasi merawat</div>
+                    </div>
+                </div>
+                {{-- Connector --}}
+                <div style="width:2px; height:18px; background:var(--pr-border); margin-left:13px;"></div>
+ 
+                {{-- Step 3 --}}
+                <div class="pr-step">
+                    <div class="pr-step-icon">
+                        <i class="bi bi-clock-history"></i>
+                    </div>
+                    <div>
+                        <div class="fw-semibold" style="font-size:.9rem; color: var(--pr-text-muted);">3. Pengalaman</div>
+                        <div class="small-muted">Riwayat memelihara</div>
+                    </div>
                 </div>
             </div>
         </div>
+ 
+        {{-- ============ FORM KANAN ============ --}}
+        <div class="col-lg-8">
+            <div class="pr-card p-4 p-md-5">
+ 
+                {{-- Header --}}
+                <h3 class="fw-bold mb-1">Formulir Permohonan Adopsi</h3>
+                <p class="mb-4" style="color: var(--pr-text-muted);">
+                    Lengkapi data di bawah ini untuk memulai perjalanan indah bersama sahabat barumu.<br>
+                    Kami akan meninjau aplikasimu dengan penuh perhatian.
+                </p>
+ 
+                {{-- Error alert --}}
+                @if($errors->any())
+                    <div class="alert alert-danger mb-4">
+                        <ul class="mb-0">
+                            @foreach($errors->all() as $e)
+                                <li>{{ $e }}</li>
+                            @endforeach
+                        </ul>
+                    </div>
+                @endif
+ 
+                <form method="POST" action="{{ route('adoption.store', $animal) }}">
+                    @csrf
+ 
+                    {{-- ---- Bagian 1: Data Pribadi ---- --}}
+                    <div class="d-flex align-items-center gap-2 mb-3 pb-2"
+                         style="border-bottom: 1px solid var(--pr-border);">
+                        <span style="color: var(--pr-orange); font-size: 1.1rem;">
+                            <i class="bi bi-person-fill"></i>
+                        </span>
+                        <h5 class="fw-bold mb-0" style="color: var(--pr-orange);">Data Pribadi</h5>
+                    </div>
+ 
+                    <div class="row g-3 mb-4">
+                        {{-- Nama Lengkap --}}
+                        <div class="col-md-6">
+                            <label class="form-label" style="font-size:.75rem; text-transform:uppercase; letter-spacing:.06em; color:var(--pr-text-muted); font-weight:700;">
+                                NAMA LENGKAP
+                            </label>
+                            <input type="text"
+                                   name="full_name"
+                                   value="{{ old('full_name', auth()->user()->name) }}"
+                                   placeholder="Masukkan nama sesuai KTP"
+                                   class="form-control @error('full_name') is-invalid @enderror"
+                                   required>
+                            @error('full_name')<div class="invalid-feedback">{{ $message }}</div>@enderror
+                        </div>
+ 
+                        {{-- No. WhatsApp --}}
+                        <div class="col-md-6">
+                            <label class="form-label" style="font-size:.75rem; text-transform:uppercase; letter-spacing:.06em; color:var(--pr-text-muted); font-weight:700;">
+                                NOMOR WHATSAPP AKTIF
+                            </label>
+                            <input type="text"
+                                   name="whatsapp"
+                                   value="{{ old('whatsapp', auth()->user()->phone ?? '') }}"
+                                   placeholder="Contoh: 08123456789"
+                                   class="form-control @error('whatsapp') is-invalid @enderror"
+                                   required>
+                            @error('whatsapp')<div class="invalid-feedback">{{ $message }}</div>@enderror
+                        </div>
+ 
+                        {{-- Email --}}
+                        <div class="col-12">
+                            <label class="form-label" style="font-size:.75rem; text-transform:uppercase; letter-spacing:.06em; color:var(--pr-text-muted); font-weight:700;">
+                                ALAMAT EMAIL
+                            </label>
+                            <input type="email"
+                                   name="email"
+                                   value="{{ old('email', auth()->user()->email) }}"
+                                   placeholder="budi@example.com"
+                                   class="form-control @error('email') is-invalid @enderror"
+                                   required>
+                            @error('email')<div class="invalid-feedback">{{ $message }}</div>@enderror
+                        </div>
+ 
+                        {{-- Alamat --}}
+                        <div class="col-12">
+                            <label class="form-label" style="font-size:.75rem; text-transform:uppercase; letter-spacing:.06em; color:var(--pr-text-muted); font-weight:700;">
+                                ALAMAT DOMISILI LENGKAP
+                            </label>
+                            <textarea name="address"
+                                      rows="3"
+                                      placeholder="Masukkan alamat lengkap beserta RT/RW dan kodepos"
+                                      class="form-control @error('address') is-invalid @enderror"
+                                      required>{{ old('address', auth()->user()->address ?? '') }}</textarea>
+                            @error('address')<div class="invalid-feedback">{{ $message }}</div>@enderror
+                        </div>
+                    </div>
+ 
+                    {{-- ---- Bagian 2: Alasan Adopsi ---- --}}
+                    <div class="d-flex align-items-center gap-2 mb-3 pb-2"
+                         style="border-bottom: 1px solid var(--pr-border);">
+                        <span style="color: var(--pr-orange); font-size: 1.1rem;">
+                            <i class="bi bi-heart-fill"></i>
+                        </span>
+                        <h5 class="fw-bold mb-0" style="color: var(--pr-orange);">Alasan Adopsi</h5>
+                    </div>
+ 
+                    <div class="mb-4">
+                        <label class="form-label" style="font-size:.75rem; text-transform:uppercase; letter-spacing:.06em; color:var(--pr-text-muted); font-weight:700;">
+                            MENGAPA ANDA INGIN MENGADOPSI HEWAN INI?
+                        </label>
+                        <p class="mb-2" style="font-size:.85rem; color:var(--pr-text-muted);">
+                            Ceritakan sedikit tentang motivasi Anda dan lingkungan rumah yang akan menjadi tempat tinggal barunya.
+                        </p>
+                        <textarea name="reason"
+                                  rows="5"
+                                  placeholder="Saya ingin mengadopsi karena..."
+                                  class="form-control @error('reason') is-invalid @enderror"
+                                  required>{{ old('reason') }}</textarea>
+                        @error('reason')<div class="invalid-feedback">{{ $message }}</div>@enderror
+                    </div>
+ 
+                    {{-- ---- Bagian 3: Pengalaman Memelihara ---- --}}
+                    <div class="d-flex align-items-center gap-2 mb-3 pb-2"
+                         style="border-bottom: 1px solid var(--pr-border);">
+                        <span style="color: var(--pr-orange); font-size: 1.1rem;">
+                            <i class="bi bi-clock-history"></i>
+                        </span>
+                        <h5 class="fw-bold mb-0" style="color: var(--pr-orange);">Pengalaman Memelihara</h5>
+                    </div>
+ 
+                    <div class="mb-4">
+                        <label class="form-label mb-3" style="font-size:.75rem; text-transform:uppercase; letter-spacing:.06em; color:var(--pr-text-muted); font-weight:700;">
+                            APAKAH ANDA PERNAH ATAU SEDANG MEMELIHARA HEWAN PELIHARAAN?
+                        </label>
+ 
+                        {{-- Experience toggle buttons --}}
+                        <div class="d-flex gap-2 flex-wrap" id="experienceGroup">
+                            @foreach(['belum' => 'Belum Pernah', 'pernah' => 'Pernah di Masa Lalu', 'sedang' => 'Sedang Memelihara'] as $value => $label)
+                                <button type="button"
+                                        class="exp-btn btn @if(old('experience') === $value) exp-active @endif"
+                                        data-value="{{ $value }}"
+                                        style="border: 1.5px solid var(--pr-border); border-radius: 10px; padding: 10px 20px; font-weight: 600; font-size: .9rem; background: #fff; color: var(--pr-text); transition: all .15s;">
+                                    {{ $label }}
+                                </button>
+                            @endforeach
+                        </div>
+                        <input type="hidden" name="experience" id="experienceInput" value="{{ old('experience', '') }}" required>
+                        @error('experience')<div class="text-danger mt-1" style="font-size:.85rem;">{{ $message }}</div>@enderror
+                    </div>
+ 
+                    {{-- Info box --}}
+                    <div class="d-flex gap-3 p-3 mb-4 rounded-3"
+                         style="background: var(--pr-info-bg); border: 1px solid #bfdbfe;">
+                        <span style="color: var(--pr-info); font-size: 1.1rem; flex-shrink:0; margin-top:1px;">
+                            <i class="bi bi-info-circle-fill"></i>
+                        </span>
+                        <p class="mb-0" style="font-size:.88rem; color: #1e40af; line-height:1.55;">
+                            Tim kami mungkin akan menghubungi Anda untuk verifikasi data dan wawancara singkat
+                            via telepon atau WhatsApp setelah formulir ini diajukan.
+                        </p>
+                    </div>
+ 
+                    {{-- Agreement checkbox --}}
+                    <div class="d-flex align-items-start gap-3 mb-4">
+                        <input class="form-check-input mt-1 flex-shrink-0 @error('agreement') is-invalid @enderror"
+                               type="checkbox"
+                               name="agreement"
+                               value="1"
+                               id="agreement"
+                               {{ old('agreement') ? 'checked' : '' }}
+                               required
+                               style="width:18px; height:18px; accent-color: var(--pr-orange); cursor:pointer;">
+                        <label for="agreement" class="mb-0" style="font-size:.9rem; color: var(--pr-text-muted); cursor:pointer; line-height:1.55;">
+                            Saya menyatakan bahwa data yang diisi adalah benar. Saya bersedia untuk dihubungi oleh
+                            pihak shelter dan memahami bahwa pengisian formulir ini tidak menjamin persetujuan adopsi.
+                        </label>
+                    </div>
+                    @error('agreement')
+                        <div class="text-danger mb-3" style="font-size:.85rem;">{{ $message }}</div>
+                    @enderror
+ 
+                    {{-- Action buttons --}}
+                    <div class="d-flex align-items-center justify-content-end gap-3 pt-2">
+                        <a href="{{ route('animals.show', $animal) }}"
+                           class="text-decoration-none fw-semibold"
+                           style="color: var(--pr-text-muted); font-size:.95rem;">
+                            Simpan Draft
+                        </a>
+                        <button type="submit" class="pr-btn-primary d-inline-flex align-items-center gap-2 px-4 py-3" style="border-radius: 14px; font-size:.95rem;">
+                            Ajukan Permohonan <i class="bi bi-send-fill"></i>
+                        </button>
+                    </div>
+ 
+                </form>
+            </div>
+        </div>
+        {{-- end col-8 --}}
+ 
     </div>
 </div>
+ 
+{{-- Script untuk toggle experience --}}
+<script>
+document.addEventListener('DOMContentLoaded', function () {
+    const btns = document.querySelectorAll('.exp-btn');
+    const input = document.getElementById('experienceInput');
+ 
+    const activeStyle = {
+        background: 'var(--pr-orange)',
+        color: '#fff',
+        borderColor: 'var(--pr-orange)',
+    };
+    const inactiveStyle = {
+        background: '#fff',
+        color: 'var(--pr-text, #1F2A37)',
+        borderColor: 'var(--pr-border, #E5E7EB)',
+    };
+ 
+    // Init: highlight if old value is set
+    if (input.value) {
+        btns.forEach(btn => {
+            const isActive = btn.dataset.value === input.value;
+            Object.assign(btn.style, isActive ? activeStyle : inactiveStyle);
+        });
+    }
+ 
+    btns.forEach(btn => {
+        btn.addEventListener('click', function () {
+            input.value = this.dataset.value;
+            btns.forEach(b => Object.assign(b.style, inactiveStyle));
+            Object.assign(this.style, activeStyle);
+        });
+    });
+});
+</script>
+ 
 @endsection
