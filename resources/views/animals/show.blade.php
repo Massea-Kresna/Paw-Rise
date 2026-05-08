@@ -60,16 +60,12 @@
     line-height: 1.2;
 }
 .cta-box {
-    max-width: 500px;
-    margin-left: auto;
     border: 1px solid var(--pr-border);
     border-radius: 16px;
     padding: 20px;
     background: #fff;
 }
 .shelter-card {
-    max-width: 500px;
-    margin-left: auto;
     border: 1px solid var(--pr-border);
     border-radius: 16px;
     padding: 20px;
@@ -102,19 +98,22 @@
         <i class="bi bi-arrow-left"></i> Kembali ke Katalog
     </a>
 
-    {{-- ====== TOP SECTION: Foto kiri + Info kanan ====== --}}
+    {{-- ====== SATU ROW: Kiri (foto+tentang+medis) | Kanan (info+cta+shelter) ====== --}}
     <div class="row g-4 align-items-start mb-5">
 
-        {{-- KOLOM KIRI: Foto --}}
+        {{-- ========== KOLOM KIRI ========== --}}
         <div class="col-lg-5">
+
+            {{-- Foto utama --}}
             <img id="mainPhoto"
                  src="{{ $animal->mainPhotoUrl() }}"
                  alt="{{ $animal->name }}"
                  class="detail-photo-main mb-3"
                  onclick="openLightbox(this.src)">
 
+            {{-- Thumbnails --}}
             @if($animal->photos->count())
-            <div class="d-flex gap-2 flex-wrap">
+            <div class="d-flex gap-2 flex-wrap mb-4">
                 <img src="{{ $animal->mainPhotoUrl() }}"
                      class="detail-thumb active"
                      alt=""
@@ -137,9 +136,28 @@
                 @endif
             </div>
             @endif
-        </div>
 
-        {{-- KOLOM KANAN: Info + CTA + Shelter --}}
+            {{-- Tentang --}}
+            <h3 class="fw-bold mb-3">Tentang {{ $animal->name }}</h3>
+            <p style="color:var(--pr-text-muted);line-height:1.8;font-size:.96rem;">
+                {{ $animal->description ?? 'Belum ada deskripsi.' }}
+            </p>
+
+            {{-- Riwayat Medis --}}
+            @if($animal->medical_history)
+            <h5 class="fw-bold mt-4 mb-3">Riwayat Medis</h5>
+            @foreach(array_filter(array_map('trim', explode("\n", $animal->medical_history))) as $item)
+                <div class="medis-item">
+                    <i class="bi bi-check-circle-fill mt-1 flex-shrink-0" style="color:var(--pr-success);"></i>
+                    <span>{{ $item }}</span>
+                </div>
+            @endforeach
+            @endif
+
+        </div>
+        {{-- end kolom kiri --}}
+
+        {{-- ========== KOLOM KANAN ========== --}}
         <div class="col-lg-7">
 
             {{-- Badge + lokasi --}}
@@ -277,7 +295,7 @@
                 </div>
             </div>
 
-            {{-- Shelter Card — di bawah CTA, lebar otomatis sama --}}
+            {{-- Shelter Card --}}
             <div class="shelter-card">
                 <h6 class="fw-bold mb-3">Shelter Terkait</h6>
                 <div class="d-flex align-items-center gap-3 mb-3">
@@ -302,30 +320,7 @@
         {{-- end kolom kanan --}}
 
     </div>
-    {{-- end top section --}}
-
-    {{-- ====== BOTTOM SECTION ====== --}}
-<div class="row g-4 mb-5">
-
-    {{-- Kiri: Deskripsi + Riwayat Medis --}}
-    <div class="col-lg-5">
-        <h3 class="fw-bold mb-3">Tentang {{ $animal->name }}</h3>
-        <p style="color:var(--pr-text-muted);line-height:1.8;font-size:.96rem;">
-            {{ $animal->description ?? 'Belum ada deskripsi.' }}
-        </p>
-
-        @if($animal->medical_history)
-        <h5 class="fw-bold mt-4 mb-3">Riwayat Medis</h5>
-        @foreach(array_filter(array_map('trim', explode("\n", $animal->medical_history))) as $item)
-            <div class="medis-item">
-                <i class="bi bi-check-circle-fill mt-1 flex-shrink-0" style="color:var(--pr-success);"></i>
-                <span>{{ $item }}</span>
-            </div>
-        @endforeach
-        @endif
-    </div>
-
-</div>
+    {{-- end row --}}
 
     {{-- ====== Hewan Serupa ====== --}}
     @if($similar->count())

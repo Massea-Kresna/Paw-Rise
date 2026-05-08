@@ -59,16 +59,12 @@
     line-height: 1.2;
 }
 .cta-box {
-    max-width: 500px;
-    margin-left: auto;
     border: 1px solid var(--pr-border);
     border-radius: 16px;
     padding: 20px;
     background: #fff;
 }
 .shelter-card {
-    max-width: 500px;
-    margin-left: auto;
     border: 1px solid var(--pr-border);
     border-radius: 16px;
     padding: 20px;
@@ -106,14 +102,17 @@
 
         
         <div class="col-lg-5">
+
+            
             <img id="mainPhoto"
                  src="<?php echo e($animal->mainPhotoUrl()); ?>"
                  alt="<?php echo e($animal->name); ?>"
                  class="detail-photo-main mb-3"
                  onclick="openLightbox(this.src)">
 
+            
             <?php if($animal->photos->count()): ?>
-            <div class="d-flex gap-2 flex-wrap">
+            <div class="d-flex gap-2 flex-wrap mb-4">
                 <img src="<?php echo e($animal->mainPhotoUrl()); ?>"
                      class="detail-thumb active"
                      alt=""
@@ -137,7 +136,27 @@
                 <?php endif; ?>
             </div>
             <?php endif; ?>
+
+            
+            <h3 class="fw-bold mb-3">Tentang <?php echo e($animal->name); ?></h3>
+            <p style="color:var(--pr-text-muted);line-height:1.8;font-size:.96rem;">
+                <?php echo e($animal->description ?? 'Belum ada deskripsi.'); ?>
+
+            </p>
+
+            
+            <?php if($animal->medical_history): ?>
+            <h5 class="fw-bold mt-4 mb-3">Riwayat Medis</h5>
+            <?php $__currentLoopData = array_filter(array_map('trim', explode("\n", $animal->medical_history))); $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $item): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+                <div class="medis-item">
+                    <i class="bi bi-check-circle-fill mt-1 flex-shrink-0" style="color:var(--pr-success);"></i>
+                    <span><?php echo e($item); ?></span>
+                </div>
+            <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
+            <?php endif; ?>
+
         </div>
+        
 
         
         <div class="col-lg-7">
@@ -306,30 +325,6 @@
 
     </div>
     
-
-    
-<div class="row g-4 mb-5">
-
-    
-    <div class="col-lg-5">
-        <h3 class="fw-bold mb-3">Tentang <?php echo e($animal->name); ?></h3>
-        <p style="color:var(--pr-text-muted);line-height:1.8;font-size:.96rem;">
-            <?php echo e($animal->description ?? 'Belum ada deskripsi.'); ?>
-
-        </p>
-
-        <?php if($animal->medical_history): ?>
-        <h5 class="fw-bold mt-4 mb-3">Riwayat Medis</h5>
-        <?php $__currentLoopData = array_filter(array_map('trim', explode("\n", $animal->medical_history))); $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $item): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
-            <div class="medis-item">
-                <i class="bi bi-check-circle-fill mt-1 flex-shrink-0" style="color:var(--pr-success);"></i>
-                <span><?php echo e($item); ?></span>
-            </div>
-        <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
-        <?php endif; ?>
-    </div>
-
-</div>
 
     
     <?php if($similar->count()): ?>
