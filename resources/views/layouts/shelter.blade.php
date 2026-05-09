@@ -2,7 +2,7 @@
 
 @section('body')
     @include('partials.navbar-shelter')
-    <main class="container py-4">
+   <main class="container py-4" style="min-height: calc(100vh - 80px);">
         <div class="row g-4">
             <aside class="col-lg-3">
                 @include('partials.sidebar-shelter')

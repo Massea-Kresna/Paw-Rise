@@ -1,26 +1,38 @@
 @extends('layouts.shelter')
 @section('title', 'Konfirmasi Keluar - PawRise')
 @section('content')
-<div class="container-fluid p-4">
-    <div class="row g-4">
-        <div class="col-lg-3">@include('partials.sidebar-shelter')</div>
-        <div class="col-lg-9">
-            <div class="row justify-content-center">
-                <div class="col-md-7">
-                    <div class="pr-card p-5 text-center">
-                        <i class="bi bi-box-arrow-right" style="font-size: 60px; color: var(--pr-orange)"></i>
-                        <h3 class="fw-bold mt-3">Yakin ingin keluar?</h3>
-                        <p class="text-secondary">Anda akan keluar dari akun shelter Anda.</p>
-                        <div class="d-flex gap-2 justify-content-center mt-4">
-                            <a href="{{ route('shelter.dashboard') }}" class="btn btn-outline-secondary">Batal</a>
-                            <form method="POST" action="{{ route('logout') }}">@csrf
-                                <button class="btn pr-btn-primary">Keluar</button>
-                            </form>
-                        </div>
-                    </div>
-                </div>
-            </div>
+
+<div class="d-flex align-items-center justify-content-center" style="min-height: 60vh;">
+    <div class="text-center p-5"
+         style="background: #fff; border: 1px solid var(--pr-border); border-radius: 20px; width: 100%; max-width: 340px;">
+
+        <div style="width: 72px; height: 72px; border-radius: 50%; background: var(--pr-orange-light);
+                    display: flex; align-items: center; justify-content: center; margin: 0 auto 20px;">
+            <i class="bi bi-paw-fill" style="font-size: 2rem; color: var(--pr-orange);"></i>
+        </div>
+
+        <h4 class="fw-bold mb-2">Keluar dari PawRise?</h4>
+        <p style="color: var(--pr-text-muted); font-size: .9rem; line-height: 1.6;">
+            Anda akan keluar dari akun shelter Anda.
+        </p>
+
+        <div class="d-flex flex-column gap-2 mt-4">
+            <form method="POST" action="{{ route('logout') }}">
+                @csrf
+                <button type="submit"
+                        class="btn pr-btn-primary w-100"
+                        style="border-radius: 12px; padding: 12px; font-size: .95rem;">
+                    Ya, Keluar
+                </button>
+            </form>
+            <a href="{{ route('shelter.dashboard') }}"
+               class="btn w-100"
+               style="border-radius: 12px; padding: 12px; font-size: .95rem;
+                      border: 1.5px solid var(--pr-border); color: var(--pr-text-muted); font-weight: 600;">
+                Batal
+            </a>
         </div>
     </div>
 </div>
+
 @endsection

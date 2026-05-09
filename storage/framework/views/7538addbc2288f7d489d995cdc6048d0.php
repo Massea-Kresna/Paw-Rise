@@ -1,6 +1,5 @@
-@extends('layouts.shelter')
-@section('title', 'Permohonan - PawRise Shelter')
-@section('content')
+<?php $__env->startSection('title', 'Permohonan - PawRise Shelter'); ?>
+<?php $__env->startSection('content'); ?>
 
 <style>
 .app-table th {
@@ -44,7 +43,7 @@
 .pill-ditolak   { background: #FEE2E2; color: #991B1B; }
 </style>
 
-{{-- Header --}}
+
 <div class="d-flex align-items-start justify-content-between mb-4 flex-wrap gap-3">
     <div>
         <h3 class="fw-bold mb-1">Permohonan Adopsi</h3>
@@ -54,22 +53,23 @@
     </div>
 </div>
 
-@if(session('success'))
-    <div class="alert alert-success mb-3">{{ session('success') }}</div>
-@endif
+<?php if(session('success')): ?>
+    <div class="alert alert-success mb-3"><?php echo e(session('success')); ?></div>
+<?php endif; ?>
 
-{{-- Filter --}}
+
 <div class="pr-card p-3 mb-3">
     <form method="GET" class="d-flex align-items-center gap-2 flex-wrap">
         <select name="status"
                 class="form-select form-select-sm"
                 style="max-width: 180px; border-radius: 10px;">
             <option value="">Semua status</option>
-            @foreach(['menunggu','disetujui','ditolak'] as $st)
-                <option value="{{ $st }}" {{ request('status') == $st ? 'selected' : '' }}>
-                    {{ ucfirst($st) }}
+            <?php $__currentLoopData = ['menunggu','disetujui','ditolak']; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $st): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+                <option value="<?php echo e($st); ?>" <?php echo e(request('status') == $st ? 'selected' : ''); ?>>
+                    <?php echo e(ucfirst($st)); ?>
+
                 </option>
-            @endforeach
+            <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
         </select>
         <button class="btn pr-btn-primary btn-sm" style="border-radius: 999px; padding: 6px 20px;">
             Filter
@@ -77,7 +77,7 @@
     </form>
 </div>
 
-{{-- Tabel --}}
+
 <div class="pr-card p-0 overflow-hidden">
     <div class="table-responsive">
         <table class="table app-table mb-0">
@@ -91,73 +91,77 @@
                 </tr>
             </thead>
             <tbody>
-            @forelse($apps as $app)
+            <?php $__empty_1 = true; $__currentLoopData = $apps; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $app): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); $__empty_1 = false; ?>
                 <tr>
-                    {{-- Pemohon --}}
+                    
                     <td>
                         <div class="d-flex align-items-center gap-3">
                             <div class="user-avatar">
-                                {{ strtoupper(substr($app->full_name, 0, 2)) }}
+                                <?php echo e(strtoupper(substr($app->full_name, 0, 2))); ?>
+
                             </div>
                             <div>
-                                <div class="fw-semibold" style="font-size: .9rem;">{{ $app->full_name }}</div>
-                                <div style="font-size: .78rem; color: var(--pr-text-muted);">{{ $app->whatsapp }}</div>
+                                <div class="fw-semibold" style="font-size: .9rem;"><?php echo e($app->full_name); ?></div>
+                                <div style="font-size: .78rem; color: var(--pr-text-muted);"><?php echo e($app->whatsapp); ?></div>
                             </div>
                         </div>
                     </td>
 
-                    {{-- Hewan --}}
+                    
                     <td>
                         <div class="d-flex align-items-center gap-3">
-                            <img src="{{ $app->animal->mainPhotoUrl() }}" alt=""
+                            <img src="<?php echo e($app->animal->mainPhotoUrl()); ?>" alt=""
                                  style="width:40px; height:40px; border-radius:10px; object-fit:cover; flex-shrink:0;">
                             <div>
-                                <div class="fw-semibold" style="font-size: .9rem;">{{ $app->animal->name }}</div>
+                                <div class="fw-semibold" style="font-size: .9rem;"><?php echo e($app->animal->name); ?></div>
                                 <div style="font-size: .78rem; color: var(--pr-text-muted);">
-                                    {{ ucfirst($app->animal->species) }} • {{ $app->animal->ageLabel() }}
+                                    <?php echo e(ucfirst($app->animal->species)); ?> • <?php echo e($app->animal->ageLabel()); ?>
+
                                 </div>
                             </div>
                         </div>
                     </td>
 
-                    {{-- Tanggal --}}
+                    
                     <td style="font-size: .87rem; color: var(--pr-text-muted);">
-                        {{ $app->created_at->format('d M Y') }}<br>
-                        <small>{{ $app->created_at->format('H:i') }}</small>
+                        <?php echo e($app->created_at->format('d M Y')); ?><br>
+                        <small><?php echo e($app->created_at->format('H:i')); ?></small>
                     </td>
 
-                    {{-- Status --}}
+                    
                     <td>
-                        <span class="status-pill pill-{{ $app->status }}">
-                            {{ ucfirst($app->status) }}
+                        <span class="status-pill pill-<?php echo e($app->status); ?>">
+                            <?php echo e(ucfirst($app->status)); ?>
+
                         </span>
                     </td>
 
-                    {{-- Aksi --}}
+                    
                     <td class="text-end">
-                        <a href="{{ route('shelter.applications.show', $app) }}"
+                        <a href="<?php echo e(route('shelter.applications.show', $app)); ?>"
                            class="btn btn-sm pr-btn-primary"
                            style="border-radius: 999px; font-size: .82rem; padding: 5px 16px;">
                             Lihat Detail
                         </a>
                     </td>
                 </tr>
-            @empty
+            <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); if ($__empty_1): ?>
                 <tr>
                     <td colspan="5" class="text-center py-5" style="color: var(--pr-text-muted);">
                         <i class="bi bi-clipboard-x" style="font-size: 2.5rem; display:block; margin-bottom:10px; opacity:.4;"></i>
                         Belum ada permohonan.
                     </td>
                 </tr>
-            @endforelse
+            <?php endif; ?>
             </tbody>
         </table>
     </div>
 </div>
 
-{{-- Pagination --}}
-@if($apps->hasPages())
-    <div class="mt-3">{{ $apps->links() }}</div>
-@endif
 
-@endsection
+<?php if($apps->hasPages()): ?>
+    <div class="mt-3"><?php echo e($apps->links()); ?></div>
+<?php endif; ?>
+
+<?php $__env->stopSection(); ?>
+<?php echo $__env->make('layouts.shelter', array_diff_key(get_defined_vars(), ['__data' => 1, '__path' => 1]))->render(); ?><?php /**PATH C:\Users\LENOVO\Pawrise\resources\views/shelter/applications/index.blade.php ENDPATH**/ ?>

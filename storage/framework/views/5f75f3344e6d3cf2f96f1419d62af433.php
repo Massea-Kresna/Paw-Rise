@@ -1,6 +1,5 @@
-@extends('layouts.shelter')
-@section('title', 'Dashboard - PawRise Shelter')
-@section('content')
+<?php $__env->startSection('title', 'Dashboard - PawRise Shelter'); ?>
+<?php $__env->startSection('content'); ?>
 
 <style>
 .dash-stat {
@@ -86,67 +85,67 @@
 }
 </style>
 
-@php
+<?php
     $shelter      = auth()->user()->shelter;
     $totalAnimals = $shelter ? $shelter->animals()->count() : 0;
     $available    = $shelter ? $shelter->animals()->where('status','tersedia')->count() : 0;
     $process      = $shelter ? $shelter->animals()->where('status','diproses')->count() : 0;
     $adopted      = $shelter ? $shelter->animals()->where('status','diadopsi')->count() : 0;
-@endphp
+?>
 
-{{-- Header --}}
+
 <div class="d-flex align-items-start justify-content-between mb-4 flex-wrap gap-3">
     <div>
-        <h3 class="fw-bold mb-1">Selamat datang, {{ $shelter->shelter_name ?? auth()->user()->name }}</h3>
+        <h3 class="fw-bold mb-1">Selamat datang, <?php echo e($shelter->shelter_name ?? auth()->user()->name); ?></h3>
         <p class="mb-0" style="color: var(--pr-text-muted); font-size: .9rem;">
             Berikut adalah ringkasan aktivitas shelter Anda.
         </p>
     </div>
-    <a href="{{ route('shelter.animals.create') }}"
+    <a href="<?php echo e(route('shelter.animals.create')); ?>"
        class="btn pr-btn-primary d-inline-flex align-items-center gap-2"
        style="border-radius: 12px; padding: 10px 20px;">
         <i class="bi bi-plus-lg"></i> Tambah Hewan Baru
     </a>
 </div>
 
-{{-- Stat Cards --}}
+
 <div class="row g-3 mb-4">
-    {{-- Total Hewan --}}
+    
     <div class="col-md-4">
         <div class="dash-stat text-center">
             <div class="dash-stat-icon" style="background: #FEF3C7; margin: 0 auto 12px;">
                 <i class="bi bi-paw-fill" style="color: var(--pr-orange);"></i>
             </div>
             <div class="dash-stat-label">TOTAL HEWAN</div>
-            <div class="dash-stat-num" style="color: var(--pr-text);">{{ $totalAnimals }}</div>
+            <div class="dash-stat-num" style="color: var(--pr-text);"><?php echo e($totalAnimals); ?></div>
             <div style="font-size:.82rem; color: #16A34A; font-weight: 600; margin-top:4px;">
-                <i class="bi bi-graph-up-arrow"></i> +{{ $available }} masih tersedia
+                <i class="bi bi-graph-up-arrow"></i> +<?php echo e($available); ?> masih tersedia
             </div>
         </div>
     </div>
 
-    {{-- Menunggu Adopsi --}}
+    
     <div class="col-md-4">
         <div class="dash-stat text-center">
             <div class="dash-stat-icon" style="background: #DBEAFE; margin: 0 auto 12px;">
                 <i class="bi bi-heart-fill" style="color: #3B82F6;"></i>
             </div>
             <div class="dash-stat-label">MENUNGGU ADOPSI</div>
-            <div class="dash-stat-num" style="color: var(--pr-text);">{{ $menungguCount }}</div>
+            <div class="dash-stat-num" style="color: var(--pr-text);"><?php echo e($menungguCount); ?></div>
             <div style="font-size:.82rem; color: var(--pr-text-muted); margin-top:4px;">
-                {{ $menungguCount }} hewan siap adopsi baru
+                <?php echo e($menungguCount); ?> hewan siap adopsi baru
             </div>
         </div>
     </div>
 
-    {{-- Permohonan Baru --}}
+    
     <div class="col-md-4">
         <div class="dash-stat text-center" style="border: 2px solid var(--pr-orange);">
             <div class="dash-stat-icon" style="background: var(--pr-orange); margin: 0 auto 12px;">
                 <i class="bi bi-clipboard-fill" style="color:#fff;"></i>
             </div>
             <div class="dash-stat-label">PERMOHONAN BARU</div>
-            <div class="dash-stat-num" style="color: var(--pr-text);">{{ $newApps }}</div>
+            <div class="dash-stat-num" style="color: var(--pr-text);"><?php echo e($newApps); ?></div>
             <div style="font-size:.82rem; color: var(--pr-orange); font-weight: 700; margin-top:4px;">
                 Butuh respon segera
             </div>
@@ -154,32 +153,32 @@
     </div>
 </div>
 
-{{-- Permohonan + Hewan --}}
+
 <div class="row g-3 mb-4">
 
-    {{-- Permohonan Terbaru --}}
+    
     <div class="col-lg-6">
         <div class="pr-card p-4 h-100">
             <div class="d-flex justify-content-between align-items-center mb-3">
                 <h6 class="fw-bold mb-0">Permohonan Adopsi Terbaru</h6>
-                <a href="{{ route('shelter.applications.index') }}"
+                <a href="<?php echo e(route('shelter.applications.index')); ?>"
                    style="font-size:.83rem; color:var(--pr-orange); font-weight:600; text-decoration:none;">
                     Lihat Semua
                 </a>
             </div>
 
-            @forelse($recentApps as $app)
+            <?php $__empty_1 = true; $__currentLoopData = $recentApps; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $app): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); $__empty_1 = false; ?>
             <div class="app-row">
-                <div class="app-avatar">{{ strtoupper(substr($app->full_name, 0, 2)) }}</div>
+                <div class="app-avatar"><?php echo e(strtoupper(substr($app->full_name, 0, 2))); ?></div>
                 <div class="flex-grow-1">
-                    <div class="fw-semibold" style="font-size:.88rem;">{{ $app->full_name }}</div>
+                    <div class="fw-semibold" style="font-size:.88rem;"><?php echo e($app->full_name); ?></div>
                     <div style="font-size:.78rem; color:var(--pr-text-muted);">
-                        Mengajukan adopsi untuk <strong>{{ $app->animal->name }}</strong>
+                        Mengajukan adopsi untuk <strong><?php echo e($app->animal->name); ?></strong>
                     </div>
                 </div>
                 <div class="d-flex align-items-center gap-2">
-                    <span class="status-pill pill-{{ $app->status }}">{{ ucfirst($app->status) }}</span>
-                    <a href="{{ route('shelter.applications.show', $app) }}"
+                    <span class="status-pill pill-<?php echo e($app->status); ?>"><?php echo e(ucfirst($app->status)); ?></span>
+                    <a href="<?php echo e(route('shelter.applications.show', $app)); ?>"
                        style="width:28px;height:28px;border-radius:8px;border:1px solid var(--pr-border);
                               display:flex;align-items:center;justify-content:center;
                               color:var(--pr-text-muted);text-decoration:none;font-size:.8rem;">
@@ -187,44 +186,45 @@
                     </a>
                 </div>
             </div>
-            @empty
+            <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); if ($__empty_1): ?>
             <p class="text-center py-3 mb-0" style="color:var(--pr-text-muted); font-size:.9rem;">
                 Belum ada permohonan.
             </p>
-            @endforelse
+            <?php endif; ?>
         </div>
     </div>
 
-    {{-- Manajemen Hewan --}}
+    
     <div class="col-lg-6">
         <div class="pr-card p-4 h-100">
             <div class="d-flex justify-content-between align-items-center mb-3">
                 <h6 class="fw-bold mb-0">Manajemen Hewan</h6>
-                <a href="{{ route('shelter.animals.index') }}"
+                <a href="<?php echo e(route('shelter.animals.index')); ?>"
                    style="font-size:.83rem; color:var(--pr-text-muted); text-decoration:none;">
                     <i class="bi bi-three-dots"></i>
                 </a>
             </div>
 
-            @forelse($animals as $animal)
+            <?php $__empty_1 = true; $__currentLoopData = $animals; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $animal): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); $__empty_1 = false; ?>
             <div class="animal-row">
-                <img src="{{ $animal->mainPhotoUrl() }}" alt=""
+                <img src="<?php echo e($animal->mainPhotoUrl()); ?>" alt=""
                      style="width:40px;height:40px;border-radius:10px;object-fit:cover;flex-shrink:0;">
                 <div class="flex-grow-1">
-                    <div class="fw-semibold" style="font-size:.88rem;">{{ $animal->name }}</div>
+                    <div class="fw-semibold" style="font-size:.88rem;"><?php echo e($animal->name); ?></div>
                     <div style="font-size:.78rem; color:var(--pr-text-muted);">
-                        {{ ucfirst($animal->species) }} • {{ $animal->ageLabel() }}
+                        <?php echo e(ucfirst($animal->species)); ?> • <?php echo e($animal->ageLabel()); ?>
+
                     </div>
                 </div>
-                <span class="status-pill pill-{{ $animal->status }}">{{ ucfirst($animal->status) }}</span>
+                <span class="status-pill pill-<?php echo e($animal->status); ?>"><?php echo e(ucfirst($animal->status)); ?></span>
             </div>
-            @empty
+            <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); if ($__empty_1): ?>
             <p class="text-center py-3 mb-0" style="color:var(--pr-text-muted); font-size:.9rem;">
                 Belum ada hewan terdaftar.
             </p>
-            @endforelse
+            <?php endif; ?>
 
-            <a href="{{ route('shelter.animals.index') }}"
+            <a href="<?php echo e(route('shelter.animals.index')); ?>"
                class="btn w-100 mt-3"
                style="border-radius:10px;border:1px solid var(--pr-border);font-size:.85rem;
                       color:var(--pr-text-muted);font-weight:600;padding:8px;">
@@ -234,7 +234,7 @@
     </div>
 </div>
 
-{{-- Performa bulan ini --}}
+
 <div class="performa-card">
     <div style="width:44px;height:44px;border-radius:12px;background:#FEF3C7;
                 display:flex;align-items:center;justify-content:center;flex-shrink:0;">
@@ -243,7 +243,7 @@
     <div class="flex-grow-1">
         <div class="fw-bold mb-1" style="font-size:.95rem;">Performa Shelter Bulan Ini</div>
         <div style="font-size:.83rem; color:var(--pr-text-muted);">
-            Shelter Anda telah menyelesaikan {{ $adopted }} adopsi. Terus pertahankan dalam 90 hari ke depan.
+            Shelter Anda telah menyelesaikan <?php echo e($adopted); ?> adopsi. Terus pertahankan dalam 90 hari ke depan.
         </div>
     </div>
     <div class="d-flex gap-4 flex-shrink-0">
@@ -258,4 +258,5 @@
     </div>
 </div>
 
-@endsection
+<?php $__env->stopSection(); ?>
+<?php echo $__env->make('layouts.shelter', array_diff_key(get_defined_vars(), ['__data' => 1, '__path' => 1]))->render(); ?><?php /**PATH C:\Users\LENOVO\Pawrise\resources\views/shelter/dashboard.blade.php ENDPATH**/ ?>
