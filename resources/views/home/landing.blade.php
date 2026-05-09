@@ -55,6 +55,91 @@
     </div>
 </section>
 
+{{-- ===== PUSAT EDUKASI ===== --}}
+<section class="pr-section" style="background:#F4F5F9;">
+    <div class="container">
+
+        <div class="d-flex justify-content-between align-items-start flex-wrap gap-3 mb-2">
+            <div>
+                <span class="pr-eyebrow">Pusat Edukasi PawRise</span>
+                <h2 class="pr-section-title">Bekal Terbaik untuk Teman Berbulu<br>Anda</h2>
+                <p class="pr-muted">Pelajari cara merawat, melatih, dan memahami hewan peliharaan Anda melalui<br>panduan lengkap dari para ahli kami.</p>
+            </div>
+            <a href="{{ route('education') }}" class="d-inline-flex align-items-center gap-2 fw-bold text-decoration-none mt-2" style="color:var(--pr-orange); white-space:nowrap;">
+                Lihat Semua Artikel <i class="bi bi-arrow-right"></i>
+            </a>
+        </div>
+
+        {{-- Filter Tabs --}}
+        <div class="d-flex gap-2 flex-wrap mb-4">
+            <button class="pr-chip active">Semua Artikel</button>
+            <button class="pr-chip">Kesehatan</button>
+            <button class="pr-chip">Pelatihan</button>
+            <button class="pr-chip">Nutrisi</button>
+            <button class="pr-chip">Gaya Hidup</button>
+        </div>
+
+        {{-- Article Cards --}}
+        <div class="row g-4">
+            <div class="col-md-4">
+                <a href="{{ route('education') }}" class="text-decoration-none d-block h-100">
+                    <div class="pr-card h-100 p-0 overflow-hidden">
+                        <div class="pr-img-placeholder" style="height:200px; border-radius:0;">
+                            <i class="bi bi-image" style="font-size:2rem;"></i>
+                        </div>
+                        <div class="p-4">
+                            <span class="pr-eyebrow">Gaya Hidup</span>
+                            <h5 class="fw-bold mt-1 mb-2" style="color:var(--pr-text);">Panduan Hari Pertama: Sambut Anggota Keluarga Baru</h5>
+                            <p class="pr-muted small mb-0">Membawa pulang hewan peliharaan baru adalah momen mendebarkan. Inilah yang perlu Anda siapkan agar mereka...</p>
+                            <div class="d-flex justify-content-between align-items-center mt-3 pt-3 border-top">
+                                <small class="pr-muted">5 Menit Baca</small>
+                                <i class="bi bi-arrow-right" style="color:var(--pr-orange);"></i>
+                            </div>
+                        </div>
+                    </div>
+                </a>
+            </div>
+            <div class="col-md-4">
+                <a href="{{ route('education') }}" class="text-decoration-none d-block h-100">
+                    <div class="pr-card h-100 p-0 overflow-hidden">
+                        <div class="pr-img-placeholder" style="height:200px; border-radius:0;">
+                            <i class="bi bi-image" style="font-size:2rem;"></i>
+                        </div>
+                        <div class="p-4">
+                            <span class="pr-eyebrow">Nutrisi</span>
+                            <h5 class="fw-bold mt-1 mb-2" style="color:var(--pr-text);">Nutrisi Seimbang: Apa yang Sebenarnya Mereka Butuhkan?</h5>
+                            <p class="pr-muted small mb-0">Pahami kebutuhan nutrisi spesifik berdasarkan usia dan jenis hewan untuk kesehatan jangka panjang yang optimal...</p>
+                            <div class="d-flex justify-content-between align-items-center mt-3 pt-3 border-top">
+                                <small class="pr-muted">8 Menit Baca</small>
+                                <i class="bi bi-arrow-right" style="color:var(--pr-orange);"></i>
+                            </div>
+                        </div>
+                    </div>
+                </a>
+            </div>
+            <div class="col-md-4">
+                <a href="{{ route('education') }}" class="text-decoration-none d-block h-100">
+                    <div class="pr-card h-100 p-0 overflow-hidden">
+                        <div class="pr-img-placeholder" style="height:200px; border-radius:0;">
+                            <i class="bi bi-image" style="font-size:2rem;"></i>
+                        </div>
+                        <div class="p-4">
+                            <span class="pr-eyebrow">Kesehatan</span>
+                            <h5 class="fw-bold mt-1 mb-2" style="color:var(--pr-text);">Mengenal Tanda-tanda Hewan Sakit</h5>
+                            <p class="pr-muted small mb-0">Deteksi dini dapat menyelamatkan nyawa. Kenali perubahan perilaku dan fisik yang memerlukan perhatian medis...</p>
+                            <div class="d-flex justify-content-between align-items-center mt-3 pt-3 border-top">
+                                <small class="pr-muted">6 Menit Baca</small>
+                                <i class="bi bi-arrow-right" style="color:var(--pr-orange);"></i>
+                            </div>
+                        </div>
+                    </div>
+                </a>
+            </div>
+        </div>
+
+    </div>
+</section>
+
 {{-- ===== HUBUNGI KAMI ===== --}}
 <section class="pr-section" id="kontak">
     <div class="container">
@@ -135,3 +220,14 @@
 </section>
 
 @endsection
+
+@push('scripts')
+<script>
+    document.querySelectorAll('.pr-chip').forEach(btn => {
+        btn.addEventListener('click', () => {
+            document.querySelectorAll('.pr-chip').forEach(b => b.classList.remove('active'));
+            btn.classList.add('active');
+        });
+    });
+</script>
+@endpush
