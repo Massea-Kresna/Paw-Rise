@@ -3,7 +3,7 @@
 @section('content')
 
 {{-- ===== HERO ===== --}}
-<section class="pr-section">
+<section class="pr-hero-section">
     <div class="container">
         <div class="row align-items-center g-5">
             <div class="col-lg-6">
@@ -13,7 +13,16 @@
                     <a href="{{ route('catalog.index') }}" class="btn pr-btn-primary">Mulai Pencarian</a>
                     <a href="{{ route('education') }}" class="btn pr-btn-outline">Pelajari Lebih Lanjut</a>
                 </div>
-                <div class="pr-paw-mark mt-5"><i class="bi bi-suit-club-fill"></i></div>
+                <div class="pr-paw-mark mt-5">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 100 100" fill="var(--pr-orange)">
+                        <ellipse cx="25" cy="18" rx="11" ry="14"/>
+                        <ellipse cx="50" cy="11" rx="11" ry="14"/>
+                        <ellipse cx="75" cy="18" rx="11" ry="14"/>
+                        <ellipse cx="13" cy="44" rx="9" ry="12"/>
+                        <ellipse cx="87" cy="44" rx="9" ry="12"/>
+                        <path d="M50 34 C33 34 20 45 20 58 C20 70 30 80 50 80 C70 80 80 70 80 58 C80 45 67 34 50 34Z"/>
+                    </svg>
+                </div>
             </div>
             <div class="col-lg-6">
                 <div class="pr-hero-card">
@@ -29,7 +38,7 @@
 </section>
 
 {{-- ===== TENTANG KAMI ===== --}}
-<section class="pr-section">
+<section class="pr-about-section">
     <div class="container">
         <div class="pr-about-card">
             <div class="row g-0 align-items-stretch">
@@ -56,7 +65,7 @@
 </section>
 
 {{-- ===== PUSAT EDUKASI ===== --}}
-<section class="pr-section" style="background:#F4F5F9;">
+<section class="pr-edu-section">
     <div class="container">
 
         <div class="d-flex justify-content-between align-items-start flex-wrap gap-3 mb-2">
@@ -65,7 +74,7 @@
                 <h2 class="pr-section-title">Bekal Terbaik untuk Teman Berbulu<br>Anda</h2>
                 <p class="pr-muted">Pelajari cara merawat, melatih, dan memahami hewan peliharaan Anda melalui<br>panduan lengkap dari para ahli kami.</p>
             </div>
-            <a href="{{ route('education') }}" class="d-inline-flex align-items-center gap-2 fw-bold text-decoration-none mt-2" style="color:var(--pr-orange); white-space:nowrap;">
+            <a href="{{ route('education') }}" class="d-inline-flex align-items-center gap-2 fw-bold text-decoration-none mt-2" style="color:var(--pr-orange); white-space:nowrap; font-size:0.9rem;">
                 Lihat Semua Artikel <i class="bi bi-arrow-right"></i>
             </a>
         </div>
@@ -89,7 +98,7 @@
                         </div>
                         <div class="p-4">
                             <span class="pr-eyebrow">Gaya Hidup</span>
-                            <h5 class="fw-bold mt-1 mb-2" style="color:var(--pr-text);">Panduan Hari Pertama: Sambut Anggota Keluarga Baru</h5>
+                            <h5 class="fw-bold mt-1 mb-2" style="color:var(--pr-text); font-family:'Manrope',sans-serif;">Panduan Hari Pertama: Sambut Anggota Keluarga Baru</h5>
                             <p class="pr-muted small mb-0">Membawa pulang hewan peliharaan baru adalah momen mendebarkan. Inilah yang perlu Anda siapkan agar mereka...</p>
                             <div class="d-flex justify-content-between align-items-center mt-3 pt-3 border-top">
                                 <small class="pr-muted">5 Menit Baca</small>
@@ -107,7 +116,7 @@
                         </div>
                         <div class="p-4">
                             <span class="pr-eyebrow">Nutrisi</span>
-                            <h5 class="fw-bold mt-1 mb-2" style="color:var(--pr-text);">Nutrisi Seimbang: Apa yang Sebenarnya Mereka Butuhkan?</h5>
+                            <h5 class="fw-bold mt-1 mb-2" style="color:var(--pr-text); font-family:'Manrope',sans-serif;">Nutrisi Seimbang: Apa yang Sebenarnya Mereka Butuhkan?</h5>
                             <p class="pr-muted small mb-0">Pahami kebutuhan nutrisi spesifik berdasarkan usia dan jenis hewan untuk kesehatan jangka panjang yang optimal...</p>
                             <div class="d-flex justify-content-between align-items-center mt-3 pt-3 border-top">
                                 <small class="pr-muted">8 Menit Baca</small>
@@ -125,7 +134,7 @@
                         </div>
                         <div class="p-4">
                             <span class="pr-eyebrow">Kesehatan</span>
-                            <h5 class="fw-bold mt-1 mb-2" style="color:var(--pr-text);">Mengenal Tanda-tanda Hewan Sakit</h5>
+                            <h5 class="fw-bold mt-1 mb-2" style="color:var(--pr-text); font-family:'Manrope',sans-serif;">Mengenal Tanda-tanda Hewan Sakit</h5>
                             <p class="pr-muted small mb-0">Deteksi dini dapat menyelamatkan nyawa. Kenali perubahan perilaku dan fisik yang memerlukan perhatian medis...</p>
                             <div class="d-flex justify-content-between align-items-center mt-3 pt-3 border-top">
                                 <small class="pr-muted">6 Menit Baca</small>
@@ -141,7 +150,7 @@
 </section>
 
 {{-- ===== HUBUNGI KAMI ===== --}}
-<section class="pr-section" id="kontak">
+<section class="pr-contact-section" id="kontak">
     <div class="container">
         <div class="text-center mb-5">
             <h2 class="pr-section-title">Hubungi Kami</h2>
@@ -153,7 +162,7 @@
         <div class="row g-4">
             <div class="col-lg-5">
                 <div class="pr-contact-info">
-                    <h4 class="fw-bold mb-4">Informasi Kontak</h4>
+                    <h4 class="fw-bold mb-4" style="font-family:'Manrope',sans-serif;">Informasi Kontak</h4>
                     <div class="pr-contact-row">
                         <div class="pr-contact-icon"><i class="bi bi-geo-alt-fill"></i></div>
                         <div>

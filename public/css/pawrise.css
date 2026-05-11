@@ -21,10 +21,11 @@
 }
 
 html, body {
-    background-color: var(--pr-bg);
+    background-color: #fff;
     color: var(--pr-text);
-    font-family: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+    font-family: 'Manrope', 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
     -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
 }
 
 a { text-decoration: none; }
@@ -69,31 +70,78 @@ a { text-decoration: none; }
 /* ---------- Brand ---------- */
 .pr-brand {
     color: var(--pr-orange);
+    font-family: 'Manrope', sans-serif;
     font-weight: 800;
     font-size: 1.35rem;
     display: inline-flex;
     align-items: center;
     gap: 8px;
+    text-decoration: none;
 }
-.pr-brand i { font-size: 1.5rem; }
+.pr-brand span { color: var(--pr-text); }
+.pr-brand:hover { text-decoration: none; }
 
 /* ---------- Navbar ---------- */
 .pr-navbar {
     background: #fff;
     border-bottom: 1px solid var(--pr-border);
-    padding: 14px 0;
+    padding: 16px 0;
+    position: sticky;
+    top: 0;
+    z-index: 1030;
 }
-.pr-navbar .nav-link {
+
+/* Nav links (center) */
+.pr-nav-links { gap: 4px; }
+.pr-nav-link {
     color: var(--pr-text);
     font-weight: 500;
-    margin: 0 6px;
+    font-size: 0.92rem;
+    padding: 6px 14px;
+    border-radius: 8px;
+    text-decoration: none;
+    transition: color .15s, background .15s;
 }
-.pr-navbar .nav-link.active,
-.pr-navbar .nav-link:hover {
+.pr-nav-link:hover { color: var(--pr-orange); background: var(--pr-orange-light); }
+.pr-nav-link.active { color: var(--pr-orange); font-weight: 600; }
+
+/* Nav auth buttons */
+.pr-nav-btn-outline {
+    display: inline-flex;
+    align-items: center;
+    border: 1.5px solid var(--pr-orange);
     color: var(--pr-orange);
+    background: transparent;
+    font-weight: 600;
+    font-size: 0.88rem;
+    border-radius: 999px;
+    padding: 7px 22px;
+    text-decoration: none;
+    transition: background .15s, color .15s;
+    white-space: nowrap;
 }
-.pr-navbar .nav-link.active {
-    border-bottom: 2px solid var(--pr-orange);
+.pr-nav-btn-outline:hover {
+    background: var(--pr-orange);
+    color: #fff;
+}
+.pr-nav-btn-primary {
+    display: inline-flex;
+    align-items: center;
+    background: var(--pr-orange);
+    color: #fff;
+    font-weight: 600;
+    font-size: 0.88rem;
+    border-radius: 999px;
+    padding: 7px 22px;
+    text-decoration: none;
+    border: 1.5px solid var(--pr-orange);
+    transition: background .15s;
+    white-space: nowrap;
+}
+.pr-nav-btn-primary:hover {
+    background: var(--pr-orange-dark);
+    border-color: var(--pr-orange-dark);
+    color: #fff;
 }
 
 /* ---------- Cards ---------- */
@@ -412,18 +460,20 @@ a { text-decoration: none; }
     margin-bottom: 12px;
 }
 .pr-section-title {
+    font-family: 'Manrope', 'Plus Jakarta Sans', sans-serif;
     font-weight: 800; font-size: 2.1rem; line-height: 1.2;
     color: var(--pr-text); margin-bottom: 16px;
 }
 
 /* HERO */
 .pr-hero-title {
-    font-weight: 800; font-size: 3rem; line-height: 1.15;
+    font-family: 'Manrope', 'Plus Jakarta Sans', sans-serif;
+    font-weight: 800; font-size: 2.8rem; line-height: 1.15;
     color: var(--pr-text); margin-bottom: 18px;
 }
 .pr-hero-sub {
-    color: var(--pr-text-muted); font-size: 1.05rem;
-    line-height: 1.7; max-width: 480px;
+    color: var(--pr-text-muted); font-size: 0.98rem;
+    line-height: 1.75; max-width: 440px;
 }
 .pr-paw-mark {
     width: 36px; height: 36px; border-radius: 50%;
@@ -458,8 +508,26 @@ a { text-decoration: none; }
 .pr-hero-pill--bottom { bottom: 60px; left: 30px;  }
 
 @media (max-width: 992px) {
-    .pr-hero-title { font-size: 2.2rem; }
+    .pr-hero-title { font-size: 2rem; }
     .pr-hero-card  { margin: 0 auto; padding: 28px; }
+}
+
+/* Hero section white background */
+.pr-hero-section {
+    background: #fff;
+    padding: 72px 0 64px;
+}
+.pr-about-section {
+    background: #fff;
+    padding: 64px 0;
+}
+.pr-edu-section {
+    background: #F4F5F9;
+    padding: 64px 0;
+}
+.pr-contact-section {
+    background: #fff;
+    padding: 64px 0;
 }
 
 /* TENTANG KAMI */
