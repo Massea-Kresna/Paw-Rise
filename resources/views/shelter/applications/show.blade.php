@@ -41,14 +41,36 @@
             @if($application->status === 'menunggu')
                 <hr>
                 <div class="d-flex gap-2 justify-content-end">
-                    <form method="POST" action="{{ route('shelter.applications.reject', $application) }}" class="d-inline">
-                        @csrf
-                        <button class="btn btn-outline-danger">Tolak</button>
-                    </form>
+                    <button type="button" class="btn btn-outline-danger" data-bs-toggle="modal" data-bs-target="#rejectModal">
+                        Tolak
+                    </button>
                     <form method="POST" action="{{ route('shelter.applications.approve', $application) }}" class="d-inline">
                         @csrf
                         <button class="btn pr-btn-primary">Setujui</button>
                     </form>
+                </div>
+
+                {{-- Modal Tolak --}}
+                <div class="modal fade" id="rejectModal" tabindex="-1" aria-labelledby="rejectModalLabel" aria-hidden="true">
+                    <div class="modal-dialog">
+                        <div class="modal-content border-0 rounded-4 shadow">
+                            <form method="POST" action="{{ route('shelter.applications.reject', $application) }}">
+                                @csrf
+                                <div class="modal-header border-0 pb-0">
+                                    <h5 class="modal-title fw-bold" id="rejectModalLabel">Tolak Permohonan</h5>
+                                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                </div>
+                                <div class="modal-body">
+                                    <p class="text-secondary small">Berikan alasan penolakan agar calon adopter dapat memahami keputusannya (opsional).</p>
+                                    <textarea name="note" rows="3" class="form-control" placeholder="Tulis catatan penolakan..."></textarea>
+                                </div>
+                                <div class="modal-footer border-0 pt-0">
+                                    <button type="button" class="btn pr-btn-outline" data-bs-dismiss="modal">Batal</button>
+                                    <button type="submit" class="btn btn-danger text-white rounded-3 px-4 py-2 fw-semibold">Konfirmasi Tolak</button>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
                 </div>
             @endif
         </div>

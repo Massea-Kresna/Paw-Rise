@@ -43,6 +43,11 @@ class KontenEdukasi extends Model
         });
     }
 
+    public function getRouteKeyName()
+    {
+        return 'slug';
+    }
+
     // ── Accessors ──────────────────────────────────────────────
     public function getGambarUrlAttribute(): string
     {
