@@ -3,7 +3,6 @@
 
         {{-- Brand / Logo --}}
         <a href="{{ route('home') }}" class="pr-brand">
-            {{-- Proper paw print SVG --}}
             <svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" viewBox="0 0 100 100" fill="var(--pr-orange)">
                 <ellipse cx="25" cy="18" rx="11" ry="14"/>
                 <ellipse cx="50" cy="11" rx="11" ry="14"/>
@@ -17,26 +16,34 @@
 
         {{-- Nav Links (center) --}}
         <div class="d-none d-md-flex align-items-center pr-nav-links">
-            @guest
+            {{-- Katalog: tampil untuk SEMUA user (guest dan logged-in) --}}
+            @auth
                 <a href="{{ route('catalog.index') }}" class="pr-nav-link {{ request()->routeIs('catalog.*') ? 'active' : '' }}">Katalog</a>
-            @endguest
+            @endauth
             <a href="{{ route('about') }}" class="pr-nav-link {{ request()->routeIs('about') ? 'active' : '' }}">Tentang Kami</a>
             <a href="{{ route('education') }}" class="pr-nav-link {{ request()->routeIs('education') ? 'active' : '' }}">Edukasi</a>
             <a href="{{ route('help') }}" class="pr-nav-link {{ request()->routeIs('help') ? 'active' : '' }}">Bantuan</a>
         </div>
 
-        {{-- Right side: Auth buttons --}}
+        {{-- Right side: Auth --}}
         <div class="d-flex align-items-center gap-2">
             @auth
-                {{-- Logged-in: Masuk + Daftar orange pill dropdown --}}
-                <a href="{{ route('user.profile') }}" class="pr-nav-btn-outline">Masuk</a>
+                {{-- Logged-in: separator + avatar icon dropdown --}}
+                <span class="d-none d-md-inline" style="color:var(--pr-border); font-size:1.2rem;">|</span>
                 <div class="dropdown">
-                    <a class="pr-nav-btn-primary d-inline-flex align-items-center gap-2"
-                       data-bs-toggle="dropdown" href="#" role="button" aria-expanded="false">
-                        Daftar
-                        <i class="bi bi-chevron-down" style="font-size:.7rem;"></i>
+                    <a class="d-inline-flex align-items-center justify-content-center text-decoration-none"
+                       data-bs-toggle="dropdown" href="#" role="button" aria-expanded="false"
+                       style="width:38px;height:38px;border-radius:50%;background:var(--pr-orange-light);border:2px solid var(--pr-orange);overflow:hidden;">
+                        <img src="{{ auth()->user()->profilePhotoUrl() }}"
+                             alt="{{ auth()->user()->name }}"
+                             style="width:100%;height:100%;object-fit:cover;"
+                             onerror="this.style.display='none';this.parentElement.innerHTML='<i class=\'bi bi-person-fill\' style=\'color:var(--pr-orange);font-size:1.1rem;\'></i>'">
                     </a>
-                    <ul class="dropdown-menu dropdown-menu-end shadow-sm border-0 rounded-3 mt-2">
+                    <ul class="dropdown-menu dropdown-menu-end shadow border-0 rounded-3 mt-2" style="min-width:200px;">
+                        <li class="px-3 py-2 border-bottom">
+                            <div class="fw-bold" style="font-size:.9rem;">{{ auth()->user()->name }}</div>
+                            <div class="text-muted" style="font-size:.78rem;">{{ auth()->user()->email }}</div>
+                        </li>
                         @if(auth()->user()->isShelter())
                             <li><a class="dropdown-item py-2" href="{{ route('shelter.dashboard') }}">
                                 <i class="bi bi-grid me-2 text-muted"></i>Dashboard</a></li>
@@ -63,7 +70,6 @@
                 <a href="{{ route('register') }}" class="pr-nav-btn-primary">Daftar</a>
             @endauth
         </div>
-
 
     </div>
 </nav>

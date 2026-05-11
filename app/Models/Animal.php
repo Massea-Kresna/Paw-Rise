@@ -79,6 +79,10 @@ class Animal extends Model
     {
         if ($this->main_photo) {
             if (str_starts_with($this->main_photo, 'http')) return $this->main_photo;
+            // Photos in public/attached_assets use asset(), storage/ paths use asset('storage/...')
+            if (str_starts_with($this->main_photo, 'attached_assets/')) {
+                return asset($this->main_photo);
+            }
             return asset('storage/' . $this->main_photo);
         }
         return 'https://placehold.co/600x450/F08C2A/fff?text=' . urlencode($this->name);
