@@ -15,12 +15,12 @@ class HomeController extends Controller
             ->take(6)
             ->get();
 
-        return view('home.landing', compact('featured'));
-    }
+        $edukasi = \App\Models\KontenEdukasi::published()
+            ->latest()
+            ->take(3)
+            ->get();
 
-    public function education()
-    {
-        return view('home.education');
+        return view('home.landing', compact('featured', 'edukasi'));
     }
 
     public function about()
@@ -35,14 +35,15 @@ class HomeController extends Controller
 
     public function sendContact(Request $request)
     {
-        $data = $request->validate([
+        $request->validate([
             'first_name' => 'required|string|max:80',
             'last_name'  => 'nullable|string|max:80',
             'email'      => 'required|email',
             'subject'    => 'required|string|max:120',
             'message'    => 'required|string|max:2000',
         ]);
-        // For now we just flash a success — wire up to mail / DB later.
-        return redirect()->route('home')->with('success', 'Pesan Anda telah terkirim. Terima kasih telah menghubungi kami.');
+
+        return redirect()->route('home')
+            ->with('success', 'Pesan Anda telah terkirim. Terima kasih telah menghubungi kami.');
     }
 }

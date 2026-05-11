@@ -779,6 +779,33 @@ a { text-decoration: none; }
     opacity: .4; pointer-events: none;
 }
 
+/* Chips / Filter Buttons */
+.pr-chip {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding: 8px 20px;
+    background: #F1F5F9;
+    color: var(--pr-text-muted);
+    border-radius: 999px;
+    font-size: 0.8rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    text-decoration: none;
+    border: none;
+    transition: all .2s;
+    letter-spacing: 0.05em;
+}
+.pr-chip:hover {
+    background: #E2E8F0;
+    color: var(--pr-text);
+}
+.pr-chip.active {
+    background: var(--pr-orange);
+    color: #fff;
+    box-shadow: 0 4px 10px rgba(240,140,42,.3);
+}
+
 /* Responsive */
 @media (max-width: 768px) {
     .pr-cat-hero { padding: 36px 0 70px; }

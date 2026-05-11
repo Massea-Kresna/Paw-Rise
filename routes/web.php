@@ -2,6 +2,7 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\HomeController;
+use App\Http\Controllers\EducationController; // ← tambahkan ini
 use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\Auth\RegisterController;
 use App\Http\Controllers\Auth\LogoutController;
@@ -16,7 +17,8 @@ use App\Http\Controllers\Shelter\ApplicationController as ShelterApplicationCont
 
 // Public
 Route::get('/', [HomeController::class, 'index'])->name('home');
-Route::get('/edukasi', [HomeController::class, 'education'])->name('education');
+Route::get('/edukasi', [EducationController::class, 'index'])->name('education'); // ← fix
+Route::get('/edukasi/{kontenEdukasi}', [EducationController::class, 'show'])->name('education.show'); // ← tambahkan
 Route::get('/tentang-kami', [HomeController::class, 'about'])->name('about');
 Route::get('/bantuan', [HomeController::class, 'help'])->name('help');
 Route::post('/kontak', [HomeController::class, 'sendContact'])->name('contact.send');

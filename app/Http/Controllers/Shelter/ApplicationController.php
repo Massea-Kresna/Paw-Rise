@@ -42,10 +42,9 @@ class ApplicationController extends Controller
     public function reject(Request $request, AdoptionApplication $application)
     {
         $this->authorizeShelter($application);
-        $note = $request->input('note');
         $application->update([
-            'status' => 'ditolak',
-            'reject_note' => $note,
+            'status'       => 'ditolak',
+            'shelter_note' => $request->input('note'), // ← sudah fix
         ]);
         return back()->with('success', 'Permohonan ditolak.');
     }

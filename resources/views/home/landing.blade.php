@@ -81,69 +81,43 @@
 
         {{-- Filter Tabs --}}
         <div class="d-flex gap-2 flex-wrap mb-4">
-            <button class="pr-chip active">Semua Artikel</button>
-            <button class="pr-chip">Kesehatan</button>
-            <button class="pr-chip">Pelatihan</button>
-            <button class="pr-chip">Nutrisi</button>
-            <button class="pr-chip">Gaya Hidup</button>
+            <a href="{{ route('education') }}" class="pr-chip active">Semua Artikel</a>
+            <a href="{{ route('education', ['kategori' => 'kesehatan']) }}" class="pr-chip">Kesehatan</a>
+            <a href="{{ route('education', ['kategori' => 'pelatihan']) }}" class="pr-chip">Pelatihan</a>
+            <a href="{{ route('education', ['kategori' => 'nutrisi']) }}" class="pr-chip">Nutrisi</a>
+            <a href="{{ route('education', ['kategori' => 'gaya_hidup']) }}" class="pr-chip">Gaya Hidup</a>
         </div>
 
         {{-- Article Cards --}}
         <div class="row g-4">
-            <div class="col-md-4">
-                <a href="{{ route('education') }}" class="text-decoration-none d-block h-100">
-                    <div class="pr-card h-100 p-0 overflow-hidden">
-                        <div class="pr-img-placeholder" style="height:200px; border-radius:0;">
-                            <i class="bi bi-image" style="font-size:2rem;"></i>
-                        </div>
-                        <div class="p-4">
-                            <span class="pr-eyebrow">Gaya Hidup</span>
-                            <h5 class="fw-bold mt-1 mb-2" style="color:var(--pr-text); font-family:'Manrope',sans-serif;">Panduan Hari Pertama: Sambut Anggota Keluarga Baru</h5>
-                            <p class="pr-muted small mb-0">Membawa pulang hewan peliharaan baru adalah momen mendebarkan. Inilah yang perlu Anda siapkan agar mereka...</p>
-                            <div class="d-flex justify-content-between align-items-center mt-3 pt-3 border-top">
-                                <small class="pr-muted">5 Menit Baca</small>
-                                <i class="bi bi-arrow-right" style="color:var(--pr-orange);"></i>
+            @forelse($edukasi as $item)
+                <div class="col-md-4">
+                    <a href="{{ route('education.show', $item) }}" class="text-decoration-none d-block h-100">
+                        <div class="pr-card h-100 p-0 overflow-hidden">
+                            @if($item->gambar)
+                                <img src="{{ $item->gambar_url }}" alt="{{ $item->judul }}" style="width:100%; height:200px; object-fit:cover; border-radius:0;">
+                            @else
+                                <div class="pr-img-placeholder" style="height:200px; border-radius:0; display:flex; align-items:center; justify-content:center; background:var(--pr-orange-light);">
+                                    <i class="bi bi-image" style="font-size:2rem; color:var(--pr-orange);"></i>
+                                </div>
+                            @endif
+                            <div class="p-4">
+                                <span class="pr-eyebrow">{{ $item->kategori_label }}</span>
+                                <h5 class="fw-bold mt-1 mb-2" style="color:var(--pr-text); font-family:'Manrope',sans-serif;">{{ Str::limit($item->judul, 60) }}</h5>
+                                <p class="pr-muted small mb-0">{{ Str::limit($item->ringkasan, 100) }}</p>
+                                <div class="d-flex justify-content-between align-items-center mt-3 pt-3 border-top">
+                                    <small class="pr-muted">{{ $item->estimasi_baca }} Menit Baca</small>
+                                    <i class="bi bi-arrow-right" style="color:var(--pr-orange);"></i>
+                                </div>
                             </div>
                         </div>
-                    </div>
-                </a>
-            </div>
-            <div class="col-md-4">
-                <a href="{{ route('education') }}" class="text-decoration-none d-block h-100">
-                    <div class="pr-card h-100 p-0 overflow-hidden">
-                        <div class="pr-img-placeholder" style="height:200px; border-radius:0;">
-                            <i class="bi bi-image" style="font-size:2rem;"></i>
-                        </div>
-                        <div class="p-4">
-                            <span class="pr-eyebrow">Nutrisi</span>
-                            <h5 class="fw-bold mt-1 mb-2" style="color:var(--pr-text); font-family:'Manrope',sans-serif;">Nutrisi Seimbang: Apa yang Sebenarnya Mereka Butuhkan?</h5>
-                            <p class="pr-muted small mb-0">Pahami kebutuhan nutrisi spesifik berdasarkan usia dan jenis hewan untuk kesehatan jangka panjang yang optimal...</p>
-                            <div class="d-flex justify-content-between align-items-center mt-3 pt-3 border-top">
-                                <small class="pr-muted">8 Menit Baca</small>
-                                <i class="bi bi-arrow-right" style="color:var(--pr-orange);"></i>
-                            </div>
-                        </div>
-                    </div>
-                </a>
-            </div>
-            <div class="col-md-4">
-                <a href="{{ route('education') }}" class="text-decoration-none d-block h-100">
-                    <div class="pr-card h-100 p-0 overflow-hidden">
-                        <div class="pr-img-placeholder" style="height:200px; border-radius:0;">
-                            <i class="bi bi-image" style="font-size:2rem;"></i>
-                        </div>
-                        <div class="p-4">
-                            <span class="pr-eyebrow">Kesehatan</span>
-                            <h5 class="fw-bold mt-1 mb-2" style="color:var(--pr-text); font-family:'Manrope',sans-serif;">Mengenal Tanda-tanda Hewan Sakit</h5>
-                            <p class="pr-muted small mb-0">Deteksi dini dapat menyelamatkan nyawa. Kenali perubahan perilaku dan fisik yang memerlukan perhatian medis...</p>
-                            <div class="d-flex justify-content-between align-items-center mt-3 pt-3 border-top">
-                                <small class="pr-muted">6 Menit Baca</small>
-                                <i class="bi bi-arrow-right" style="color:var(--pr-orange);"></i>
-                            </div>
-                        </div>
-                    </div>
-                </a>
-            </div>
+                    </a>
+                </div>
+            @empty
+                <div class="col-12 text-center py-4">
+                    <p class="pr-muted">Belum ada artikel edukasi yang dipublikasikan.</p>
+                </div>
+            @endforelse
         </div>
 
     </div>
@@ -229,14 +203,3 @@
 </section>
 
 @endsection
-
-@push('scripts')
-<script>
-    document.querySelectorAll('.pr-chip').forEach(btn => {
-        btn.addEventListener('click', () => {
-            document.querySelectorAll('.pr-chip').forEach(b => b.classList.remove('active'));
-            btn.classList.add('active');
-        });
-    });
-</script>
-@endpush

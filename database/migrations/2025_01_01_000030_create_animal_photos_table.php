@@ -11,7 +11,7 @@ return new class extends Migration
         Schema::create('animal_photos', function (Blueprint $table) {
             $table->id();
             $table->foreignId('animal_id')->constrained()->cascadeOnDelete();
-            $table->string('url');
+            $table->string('photo_path');
             $table->integer('sort_order')->default(0);
             $table->timestamps();
         });
