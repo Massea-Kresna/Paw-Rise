@@ -170,14 +170,19 @@
 
             @forelse($recentApps as $app)
             <div class="app-row">
-                <div class="app-avatar">{{ strtoupper(substr($app->full_name, 0, 2)) }}</div>
-                <div class="flex-grow-1">
+                {{-- Avatar foto bulat dengan inisial --}}
+                <div class="app-avatar" style="background: var(--pr-orange-light); color: var(--pr-orange); font-size:.85rem; font-weight:800;">
+                    {{ strtoupper(substr($app->full_name, 0, 1)) }}
+                </div>
+                <div class="flex-grow-1" style="min-width:0;">
                     <div class="fw-semibold" style="font-size:.88rem;">{{ $app->full_name }}</div>
-                    <div style="font-size:.78rem; color:var(--pr-text-muted);">
-                        Mengajukan adopsi untuk <strong>{{ $app->animal->name }}</strong>
+                    <div style="font-size:.75rem; color:var(--pr-text-muted);">
+                        Mengajukan adopsi untuk
+                        <span style="color:var(--pr-text); font-weight:600;">"{{ $app->animal->name }}"</span>
+                        ({{ ucfirst($app->animal->species) }})
                     </div>
                 </div>
-                <div class="d-flex align-items-center gap-2">
+                <div class="d-flex align-items-center gap-2 flex-shrink-0">
                     <span class="status-pill pill-{{ $app->status }}">{{ ucfirst($app->status) }}</span>
                     <a href="{{ route('shelter.applications.show', $app) }}"
                        style="width:28px;height:28px;border-radius:8px;border:1px solid var(--pr-border);
@@ -209,11 +214,11 @@
             @forelse($animals as $animal)
             <div class="animal-row">
                 <img src="{{ $animal->mainPhotoUrl() }}" alt=""
-                     style="width:40px;height:40px;border-radius:10px;object-fit:cover;flex-shrink:0;">
-                <div class="flex-grow-1">
+                     style="width:42px;height:42px;border-radius:50%;object-fit:cover;flex-shrink:0;border:2px solid var(--pr-border);">
+                <div class="flex-grow-1" style="min-width:0;">
                     <div class="fw-semibold" style="font-size:.88rem;">{{ $animal->name }}</div>
-                    <div style="font-size:.78rem; color:var(--pr-text-muted);">
-                        {{ ucfirst($animal->species) }} • {{ $animal->ageLabel() }}
+                    <div style="font-size:.75rem; color:var(--pr-text-muted);">
+                        {{ $animal->breed }} • {{ $animal->ageLabel() }}
                     </div>
                 </div>
                 <span class="status-pill pill-{{ $animal->status }}">{{ ucfirst($animal->status) }}</span>
@@ -235,25 +240,30 @@
 </div>
 
 {{-- Performa bulan ini --}}
-<div class="performa-card">
-    <div style="width:44px;height:44px;border-radius:12px;background:#FEF3C7;
+@php
+    $adoptedCount = $shelter ? $shelter->animals()->where('status','diadopsi')->count() : 0;
+@endphp
+<div class="performa-card" style="background: #EFF6FF; border: 1px solid #BFDBFE;">
+    <div style="width:44px;height:44px;border-radius:12px;background:#DBEAFE;
                 display:flex;align-items:center;justify-content:center;flex-shrink:0;">
-        <i class="bi bi-graph-up-arrow" style="color:var(--pr-orange);font-size:1.2rem;"></i>
+        <i class="bi bi-graph-up-arrow" style="color:#3B82F6;font-size:1.2rem;"></i>
     </div>
     <div class="flex-grow-1">
         <div class="fw-bold mb-1" style="font-size:.95rem;">Performa Shelter Bulan Ini</div>
         <div style="font-size:.83rem; color:var(--pr-text-muted);">
-            Shelter Anda telah menyelesaikan {{ $adopted }} adopsi. Terus pertahankan dalam 90 hari ke depan.
+            Shelter Anda telah menyelesaikan
+            <span style="color:#16A34A; font-weight:700;">{{ $adoptedCount }} adopsi</span>
+            sukses dalam 30 hari terakhir.
         </div>
     </div>
     <div class="d-flex gap-4 flex-shrink-0">
         <div class="text-center">
-            <div class="fw-bold" style="font-size:1.3rem; color:var(--pr-orange);">92%</div>
-            <div style="font-size:.72rem;color:var(--pr-text-muted);font-weight:600;text-transform:uppercase;">Respon Rate</div>
+            <div style="font-size:.72rem;color:var(--pr-text-muted);font-weight:700;text-transform:uppercase;letter-spacing:.05em;">Respon Rate</div>
+            <div class="fw-bold" style="font-size:1.4rem; color:var(--pr-text);">92%</div>
         </div>
         <div class="text-center">
-            <div class="fw-bold" style="font-size:1.3rem; color:var(--pr-orange);">4.5 Hari</div>
-            <div style="font-size:.72rem;color:var(--pr-text-muted);font-weight:600;text-transform:uppercase;">Avg. Proses</div>
+            <div style="font-size:.72rem;color:var(--pr-text-muted);font-weight:700;text-transform:uppercase;letter-spacing:.05em;">Avg Process</div>
+            <div class="fw-bold" style="font-size:1.4rem; color:var(--pr-text);">4.5 Hari</div>
         </div>
     </div>
 </div>
