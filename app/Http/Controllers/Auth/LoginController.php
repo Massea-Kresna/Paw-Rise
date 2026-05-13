@@ -22,6 +22,11 @@ class LoginController extends Controller
 
         if (Auth::attempt($credentials, (bool) $request->boolean('remember'))) {
             $request->session()->regenerate();
+
+            if ($request->user()->isAdmin()) {
+                return redirect()->intended(route('admin.dashboard'));
+            }
+
             return $request->user()->isShelter()
                 ? redirect()->intended(route('shelter.dashboard'))
                 : redirect()->intended(route('catalog.index'));

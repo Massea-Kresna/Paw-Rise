@@ -8,7 +8,7 @@ use Illuminate\Database\Eloquent\Relations\HasMany;
 
 class Shelter extends Model
 {
-    protected $fillable = ['user_id', 'shelter_name', 'city', 'logo', 'phone', 'description'];
+    protected $fillable = ['user_id', 'shelter_name', 'city', 'logo', 'phone', 'description', 'is_verified'];
 
     public function user(): BelongsTo
     {

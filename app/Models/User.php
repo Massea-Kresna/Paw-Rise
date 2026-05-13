@@ -38,6 +38,11 @@ class User extends Authenticatable
         return $this->role === 'adopter';
     }
 
+    public function isAdmin(): bool
+    {
+        return $this->role === 'admin';
+    }
+
     public function shelter(): HasOne
     {
         return $this->hasOne(Shelter::class);
