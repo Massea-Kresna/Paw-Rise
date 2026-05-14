@@ -52,6 +52,9 @@ class KontenEdukasi extends Model
     public function getGambarUrlAttribute(): string
     {
         if ($this->gambar) {
+            if (str_starts_with($this->gambar, 'http')) {
+                return $this->gambar;
+            }
             return Storage::url($this->gambar);
         }
         return asset('images/default-article.jpg');
