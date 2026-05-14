@@ -10,8 +10,8 @@
                 <h1 class="pr-hero-title">Temukan Teman <br><span class="pr-text-orange">Terbaik Anda</span></h1>
                 <p class="pr-hero-sub">Ribuan hewan peliharaan menunggu untuk memberikan cinta tanpa syarat. Mulai perjalanan adopsi Anda hari ini.</p>
                 <div class="d-flex flex-wrap gap-3 mt-4">
-                    <a href="{{ route('catalog.index') }}" class="btn pr-btn-primary">Mulai Pencarian</a>
-                    <a href="{{ route('education') }}" class="btn pr-btn-outline">Pelajari Lebih Lanjut</a>
+                    <a href="{{ auth()->check() ? route('catalog.index') : route('login') }}" class="btn pr-btn-primary">Mulai Pencarian</a>
+                    <a href="{{ route('about') }}" class="btn pr-btn-outline">Pelajari Lebih Lanjut</a>
                 </div>
                 <div class="pr-paw-mark mt-5">
                     <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 100 100" fill="var(--pr-orange)">

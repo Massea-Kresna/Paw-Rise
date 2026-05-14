@@ -46,4 +46,24 @@ class HomeController extends Controller
         return redirect()->route('home')
             ->with('success', 'Pesan Anda telah terkirim. Terima kasih telah menghubungi kami.');
     }
+
+    public function privacy()
+    {
+        return view('home.privacy');
+    }
+
+    public function terms()
+    {
+        return view('home.terms');
+    }
+
+    public function shelterContact()
+    {
+        return view('home.shelter_contact');
+    }
+
+    public function volunteer()
+    {
+        return view('home.volunteer');
+    }
 }

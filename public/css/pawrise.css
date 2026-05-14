@@ -361,17 +361,20 @@ a { text-decoration: none; }
 
 /* ---------- Footer ---------- */
 .pr-footer {
-    background: #111827;
-    color: #9CA3AF;
-    padding: 60px 0 30px;
+    background: #fff;
+    border-top: 1px solid var(--pr-border);
+    padding: 28px 0;
+    margin-top: 60px;
+    color: var(--pr-text-muted);
+    font-size: .92rem;
 }
 .pr-footer h5 {
-    color: #fff;
+    color: var(--pr-text);
     font-weight: 700;
     margin-bottom: 20px;
 }
 .pr-footer a {
-    color: #9CA3AF;
+    color: var(--pr-text);
     text-decoration: none;
     transition: color 0.2s;
 }

@@ -11,6 +11,9 @@ class LogoutController extends Controller
     public function show()
     {
         $user = auth()->user();
+        if ($user && $user->isAdmin()) {
+            return view('admin.logout');
+        }
         if ($user && $user->isShelter()) {
             return view('shelter.logout');
         }

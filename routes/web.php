@@ -29,6 +29,10 @@ Route::get('/edukasi/{kontenEdukasi}', [EducationController::class, 'show'])->na
 Route::get('/tentang-kami', [HomeController::class, 'about'])->name('about');
 Route::get('/bantuan', [HomeController::class, 'help'])->name('help');
 Route::post('/kontak', [HomeController::class, 'sendContact'])->name('contact.send');
+Route::get('/kebijakan-privasi', [HomeController::class, 'privacy'])->name('privacy');
+Route::get('/syarat-ketentuan', [HomeController::class, 'terms'])->name('terms');
+Route::get('/kontak-shelter', [HomeController::class, 'shelterContact'])->name('shelterContact');
+Route::get('/gabung-relawan', [HomeController::class, 'volunteer'])->name('volunteer');
 
 // ============================================================
 // Auth
@@ -40,16 +44,16 @@ Route::middleware('guest')->group(function () {
     Route::post('/daftar', [RegisterController::class, 'store'])->name('register.store');
 });
 
+// ============================================================
+// Catalog & Animals (Requires Login)
+// ============================================================
 Route::middleware('auth')->group(function () {
+    Route::get('/katalog', [CatalogController::class, 'index'])->name('catalog.index');
+    Route::get('/hewan/{animal}', [AnimalController::class, 'show'])->name('animals.show');
+
     Route::get('/keluar', [LogoutController::class, 'show'])->name('logout.show');
     Route::post('/keluar', [LogoutController::class, 'destroy'])->name('logout');
 });
-
-// ============================================================
-// Catalog (public)
-// ============================================================
-Route::get('/katalog', [CatalogController::class, 'index'])->name('catalog.index');
-Route::get('/hewan/{animal}', [AnimalController::class, 'show'])->name('animals.show');
 
 // ============================================================
 // Adopter

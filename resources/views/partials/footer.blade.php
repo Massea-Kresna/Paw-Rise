@@ -20,16 +20,16 @@
             {{-- Column 2: Kebijakan Privasi & Syarat --}}
             <div class="col-6 col-md-3">
                 <ul class="list-unstyled mb-0 pr-footer-list">
-                    <li><a href="#">Kebijakan Privasi</a></li>
-                    <li><a href="#">Syarat & Ketentuan</a></li>
+                    <li><a href="{{ route('privacy') }}">Kebijakan Privasi</a></li>
+                    <li><a href="{{ route('terms') }}">Syarat & Ketentuan</a></li>
                 </ul>
             </div>
 
             {{-- Column 3: Kontak Shelter & Gabung Relawan --}}
             <div class="col-6 col-md-4">
                 <ul class="list-unstyled mb-0 pr-footer-list">
-                    <li><a href="#">Kontak Shelter</a></li>
-                    <li><a href="{{ route('register') }}">Gabung Relawan</a></li>
+                    <li><a href="{{ route('shelterContact') }}">Kontak Shelter</a></li>
+                    <li><a href="{{ route('volunteer') }}">Gabung Relawan</a></li>
                 </ul>
             </div>
         </div>
