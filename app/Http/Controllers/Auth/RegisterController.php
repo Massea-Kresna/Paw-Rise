@@ -22,7 +22,7 @@ class RegisterController extends Controller
             'name'     => ['required', 'string', 'max:120'],
             'email'    => ['required', 'email', 'max:160', 'unique:users,email'],
             'phone'    => ['required', 'string', 'max:30'],
-            'password' => ['required', 'confirmed', Password::min(8)],
+            'password' => ['required', Password::min(8)],
             'role'     => ['required', 'in:adopter,shelter'],
             'shelter_name' => ['required_if:role,shelter', 'nullable', 'string', 'max:160'],
             'city'         => ['nullable', 'string', 'max:80'],

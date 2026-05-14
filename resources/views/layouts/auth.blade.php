@@ -2,7 +2,7 @@
 
 @section('body')
 <div class="pr-auth">
-    <div class="pr-auth-left" style="background-image: linear-gradient(rgba(240,140,42,.65), rgba(240,140,42,.65)), url('{{ $heroImage ?? "https://images.unsplash.com/photo-1543466835-00a7907e9de1?w=1200" }}');">
+    <div class="pr-auth-left" style="background-image: linear-gradient(rgba(240,140,42,.85), rgba(240,140,42,.85)), url('{{ $heroImage ?? "https://images.unsplash.com/photo-1552053831-71594a27632d?w=1200&q=80" }}');">
         <div class="text-center" style="max-width: 460px;">
             <h1 class="mb-3">@yield('hero_title', 'Selamat Datang!')</h1>
             <p class="lead opacity-75">@yield('hero_subtitle', 'Mulai perjalanan mencari teman selamanya')</p>

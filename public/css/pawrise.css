@@ -361,15 +361,114 @@ a { text-decoration: none; }
 
 /* ---------- Footer ---------- */
 .pr-footer {
-    background: #fff;
-    border-top: 1px solid var(--pr-border);
-    padding: 28px 0;
-    margin-top: 60px;
-    color: var(--pr-text-muted);
-    font-size: .92rem;
+    background: #111827;
+    color: #9CA3AF;
+    padding: 60px 0 30px;
 }
-.pr-footer a { color: var(--pr-text); }
-.pr-footer a:hover { color: var(--pr-orange); }
+.pr-footer h5 {
+    color: #fff;
+    font-weight: 700;
+    margin-bottom: 20px;
+}
+.pr-footer a {
+    color: #9CA3AF;
+    text-decoration: none;
+    transition: color 0.2s;
+}
+.pr-footer a:hover {
+    color: var(--pr-orange);
+}
+
+/* ---------- Auth Layout ---------- */
+.pr-auth {
+    display: flex;
+    min-height: 100vh;
+}
+.pr-auth-left {
+    flex: 1;
+    background-size: cover;
+    background-position: center;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 40px;
+    color: white;
+}
+.pr-auth-left .text-center {
+    z-index: 1;
+}
+.pr-auth-left h1 {
+    font-weight: 800;
+    font-size: 3rem;
+}
+.pr-auth-right {
+    flex: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: #F8FAFC;
+    padding: 20px;
+}
+.pr-auth-card {
+    background: #fff;
+    border-radius: 12px;
+    padding: 48px;
+    box-shadow: 0 4px 24px rgba(0,0,0,0.03);
+    width: 100%;
+    max-width: 480px;
+}
+.pr-auth-tabs {
+    display: flex;
+    margin-bottom: 32px;
+    border-bottom: 2px solid #E5E7EB;
+}
+.pr-auth-tabs a {
+    flex: 1;
+    text-align: center;
+    padding: 12px 0;
+    color: var(--pr-text-muted);
+    font-weight: 700;
+    font-size: 0.95rem;
+    text-decoration: none;
+    transition: all 0.2s;
+}
+.pr-auth-tabs a.active {
+    color: var(--pr-orange);
+    border-bottom: 2px solid var(--pr-orange);
+    margin-bottom: -2px;
+}
+.pr-auth-tabs a:hover:not(.active) {
+    color: var(--pr-text);
+}
+
+.pr-role-selector {
+    display: flex;
+    gap: 12px;
+    margin-bottom: 24px;
+}
+.pr-role-btn {
+    flex: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    padding: 10px;
+    border: 1px solid var(--pr-border);
+    border-radius: 8px;
+    background: #fff;
+    color: var(--pr-text-muted);
+    font-weight: 600;
+    font-size: 0.9rem;
+    cursor: pointer;
+    transition: all 0.2s;
+}
+.pr-role-btn.active {
+    border-color: #A16207; /* Brownish active */
+    color: #A16207;
+}
+.pr-role-btn:hover:not(.active) {
+    border-color: #CBD5E1;
+}
 
 /* ---------- Misc ---------- */
 .pr-tag {

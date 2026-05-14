@@ -1,37 +1,42 @@
 @extends('layouts.auth')
 @section('title', 'Masuk - PawRise')
-@section('content')
-<div class="pr-auth-card">
-    <h2 class="fw-bold mb-2">Selamat Datang Kembali</h2>
-    <p class="text-secondary mb-4">Masuk untuk melanjutkan perjalanan adopsi Anda.</p>
 
+@section('hero_title', 'Selamat Datang Kembali!')
+@section('hero_subtitle', 'Lanjutkan perjalanan mencari teman selamanya')
+
+@section('tab_login_class', 'active')
+@section('tab_register_class', '')
+
+@section('subtitle', 'Masuk ke Akun Anda')
+
+@section('content')
     @if ($errors->any())
-        <div class="alert alert-danger">{{ $errors->first() }}</div>
+        <div class="alert alert-danger mb-4">{{ $errors->first() }}</div>
     @endif
 
     <form method="POST" action="{{ route('login.store') }}" class="d-grid gap-3">
         @csrf
         <div>
-            <label class="form-label">Email</label>
-            <input type="email" name="email" value="{{ old('email') }}" class="form-control" placeholder="nama@email.com" required autofocus>
+            <label class="form-label fw-bold" style="font-size: 0.85rem;">Alamat Email</label>
+            <input type="email" name="email" value="{{ old('email') }}" class="form-control" style="background: #F8FAFC;" placeholder="contoh@email.com" required autofocus>
         </div>
         <div>
-            <label class="form-label">Kata Sandi</label>
-            <input type="password" name="password" class="form-control" placeholder="••••••••" required>
-        </div>
-        <div class="d-flex justify-content-between align-items-center">
-            <div class="form-check">
-                <input class="form-check-input" type="checkbox" name="remember" id="remember">
-                <label class="form-check-label" for="remember">Ingat saya</label>
+            <label class="form-label fw-bold" style="font-size: 0.85rem;">Kata Sandi</label>
+            <div class="input-group">
+                <input type="password" name="password" class="form-control border-end-0" style="background: #F8FAFC;" placeholder="Minimal 8 karakter" required>
+                <span class="input-group-text bg-transparent border-start-0 text-muted" style="background: #F8FAFC;">
+                    <i class="bi bi-eye-slash"></i>
+                </span>
             </div>
-            <a href="#" class="text-decoration-none" style="color: var(--pr-orange);">Lupa Kata Sandi?</a>
         </div>
-        <button type="submit" class="btn pr-btn-primary btn-lg">Masuk</button>
+        <div class="text-end mt-1">
+            <a href="#" class="text-decoration-none" style="color: #A16207; font-size: 0.85rem;">Lupa kata sandi?</a>
+        </div>
+        <button type="submit" class="btn pr-btn-primary w-100 mt-3" style="font-weight: 600;">Masuk <i class="bi bi-arrow-right ms-1"></i></button>
     </form>
 
-    <p class="text-center mt-4 mb-0">
-        Belum punya akun?
-        <a href="{{ route('register') }}" class="text-decoration-none fw-semibold" style="color: var(--pr-orange);">Daftar Sekarang</a>
-    </p>
-</div>
+    <div class="text-center mt-5" style="font-size: 0.9rem;">
+        <span class="text-muted">Belum punya akun?</span>
+        <a href="{{ route('register') }}" class="text-decoration-none fw-bold" style="color: #A16207;">Daftar di sini</a>
+    </div>
 @endsection
